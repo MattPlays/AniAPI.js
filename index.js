@@ -181,23 +181,30 @@ class API {
             })
         })
     }
-    ListAllEpisodeURLS(anime_id, page = 1) {
+    ListAllEpisodeURLS(anime_id) {
         return new Promise(async(resolve, reject) => {
-            await this.GetAnimeByID(anime_id).then(async(anime) => {
+            this.GetAnimeByID(anime_id).then(async(anime) => {
                 let pages = Math.floor(anime.data.episodes_count / 100)
                 if(pages == 0) pages = 1;
                 let episode_URLS = [];
-                await this.GetEpisodes({
-                    anime_id: anime_id,
-                }, page, 100).then((d) => {
-                    if(d.status_code == 200) {
-                        episode_URLS.push(d.data.documents.map((d) => {return d.video}))
-                        if(pages > 1 && page != pages) this.ListAllEpisodeURLS(anime_id, page+1);
-                    };
-                }).catch(reject)
-                resolve(episode_URLS);
+                let promises = [];
+                for(let i = 0; i < pages; i ++) {
+                    let promise = new Promise(async(resolve, reject) => {
+                        await this.GetEpisodes({
+                            anime_id: anime_id,
+                        }, page, 100).then((d) => {
+                            if(d.status_code == 200) {
+                                episode_URLS.push(d.data.documents.map((d) => {return d.video}))
+                                resolve();
+                            };
+                        }).catch(reject)
+                    })
+                    promises.push(promise)
+                }
+                await Promise.all(promises).then(() => {
+                    resolve(episode_URLS);
+                }) 
             })
-
         })
     }
 }
