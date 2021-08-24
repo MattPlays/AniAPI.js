@@ -1,0 +1,30 @@
+{
+  "name": "@mattplays/aniapi",
+  "version": "0.0.1",
+  "description": "A Javascript wrapper for aniapi",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MattPlays/AniAPI-Wrapper.git"
+  },
+  "keywords": [
+    "API",
+    "aniapi",
+    "anime"
+  ],
+  "author": "MattPlays (https://github.com/MattPlays/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MattPlays/AniAPI-Wrapper/issues"
+  },
+  "homepage": "https://github.com/MattPlays/AniAPI-Wrapper#readme",
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "https": "^1.0.0",
+    "node-fetch": "^2.6.1",
+    "path": "^0.12.7"
+  }
+}
