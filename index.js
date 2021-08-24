@@ -55,30 +55,30 @@ class Resource {
         this.resource = resource;
     }
 }
-class User {
-    constructor(id, username, email, email_verified, role, avatar, gender, localization, has_anilist, has_mal) {
-        this.id = id;
-        this.username = username;
-        this.email = email ?? null;
-        this.email_verified = email_verified ?? null;
-        this.role = role;
-        this.avatar = avatar;
-        this.gender = gender;
-        this.localization = localization ?? null;
-        this.has_anilist = has_anilist ?? null;
-        this.has_mal = has_mal ?? null;
-    }
-}
-class UserStory {
-    constructor(id, user_id, anime_id, status, current_episode, current_episode_ticks) {
-        this.id = id;
-        this.user_id = user_id;
-        this.anime_id = anime_id;
-        this.status = status;
-        this.current_episode = current_episode;
-        this.current_episode_ticks = current_episode_ticks;
-    }
-}
+// class User {
+//     constructor(id, username, email, email_verified, role, avatar, gender, localization, has_anilist, has_mal) {
+//         this.id = id;
+//         this.username = username;
+//         this.email = email ?? null;
+//         this.email_verified = email_verified ?? null;
+//         this.role = role;
+//         this.avatar = avatar;
+//         this.gender = gender;
+//         this.localization = localization ?? null;
+//         this.has_anilist = has_anilist ?? null;
+//         this.has_mal = has_mal ?? null;
+//     }
+// }
+// class UserStory {
+//     constructor(id, user_id, anime_id, status, current_episode, current_episode_ticks) {
+//         this.id = id;
+//         this.user_id = user_id;
+//         this.anime_id = anime_id;
+//         this.status = status;
+//         this.current_episode = current_episode;
+//         this.current_episode_ticks = current_episode_ticks;
+//     }
+// }
 class API {
     constructor() {
         this.baseURL = "https://api.aniapi.com/v1"
@@ -181,6 +181,11 @@ class API {
             })
         })
     }
+    /**
+     * 
+     * @param {string} anime_id - The Anime ID
+     * @returns {[string[]]}
+     */
     ListAllEpisodeURLS(anime_id) {
         return new Promise(async(resolve, reject) => {
             this.GetAnimeByID(anime_id).then(async(anime) => {
@@ -204,6 +209,116 @@ class API {
                 await Promise.all(promises).then(() => {
                     resolve(episode_URLS);
                 }) 
+            })
+        })
+    }
+    /**
+     * 
+     * @param {string} id - ID of the song you want https://aniapi.com/docs/resources/song#retrieve-a-specific-song for more details
+     * @returns {Promise<any>}
+     */
+    GetSongByID(id) {
+        return new Promise(async(resolve, reject) => {
+            let url = `${this.baseURL}/song/${id}`;
+            await fetch(url, {
+                "headers": {
+                    "Accept": "application/json"
+                },
+                "method": "GET"
+            }).then((r) => r.json()).then((res) => {
+                if(res.status_code == 200) {
+                    resolve({
+                        status_code: res.status_code,
+                        message: res.message,
+                        data: new Song(res.data.id, res.data.anime_id, res.data.title, res.data.artist, res.data.album, res.data.year, res.data.season, res.data.duration, res.data.preview_url, res.data.open_spotify_url, res.data.local_spotify_url, res.data.type),
+                        version: res.version,
+                    })
+                }else reject(res);
+            })
+        })
+    }
+    /**
+     * 
+     * @param {object} filters - Check https://aniapi.com/docs/resources/song#try-it-1 for help
+     * @param {number} page - Pagination
+     * @param {number} per_page - How many results per page
+     * @returns {{
+     *  status_code: number,
+     *  message: string,
+     *  data: {
+     *      current_page: number,
+     *      count: number,
+     *      documents: Song[],
+     *      last_page: number
+     *  },
+     * version: number
+     * }}
+     */
+    GetSongs(filters = {}, page = 1, per_page = 100) {
+        return new Promise(async(resolve, reject) => {
+            let url = `${this.baseURL}/song`;
+            if(filters.anime_id && Object.keys(filters).indexOf("anime_id") > 0) {url += `&anime_id=${filters.anime_id}`} else if(filters.anime_id) {url += `?anime_id=${filters.anime_id}`};
+            if(filters.title && Object.keys(filters).indexOf("title") > 0) {url += `&title=${filters.title}`} else if(filters.title) {url += `?title=${filters.title}`};
+            if(filters.artist && Object.keys(filters).indexOf("artist") > 0) {url += `&artist=${filters.artist}`} else if(filters.artist) {url += `?artist=${filters.artist}`};
+            if(filters.year && Object.keys(filters).indexOf("year") > 0) {url += `&year=${filters.year}`} else if(filters.year) {url += `?year=${filters.year}`};
+            if(filters.season && Object.keys(filters).indexOf("season") > 0) {url += `&season=${filters.season}`} else if(filters.season) {url += `?sesaon=${filters.season}`};
+            if(filters.type && Object.keys(filters).indexOf("type") > 0) {url += `&type=${filters.type}`} else if(filters.type) {url += `?type=${filters.type}`};
+            url += `&page=${page}&per_page=${per_page}`;
+            await fetch(url, {
+                "headers": {
+                    "Accept": "application/json"
+                },
+                "method": "GET"
+            }).then((r) => r.json()).then((res) => {
+                if(res.status_code == 200) {
+                    resolve({
+                        status_code: res.status_code,
+                        mesasge: res.message,
+                        data: {
+                            current_page: res.data.current_page,
+                            count: res.data.count,
+                            documents: res.data.documents.map((d) => {return new Song(d.id, d.anime_id, d.title, d.artist, d.album, d.year, d.season, d.duration, d.preview_url, d.open_spotify_url, d.local_spotify_url, d.type)}),
+                            last_page: res.data.last_page,
+                        },
+                        version: res.version,
+                    })
+                } else reject(res);
+            })
+        })
+    }
+    GetLastAvailableResourceVersion() {
+        return new Promise(async(resolve, reject) => {
+            let url = `${this.baseURL}/resources`
+            await fetch(url, {
+                "headers": {
+                    "Accept": "application/json"
+                },
+                "method": "GET",
+            }).then((r) => r.json()).then((res) => {
+                if(res.status_code == 200) {
+                    resolve(res);
+                } else reject(res)
+            })
+        })
+    }
+    GetResource(version = "1.0", type) {
+        return new Promise(async(resolve, reject) => {
+            let url = `${this.baseURL}/resources/${version}/${type}`
+            let url = `${this.baseURL}/resources`
+            await fetch(url, {
+                "headers": {
+                    "Accept": "application/json"
+                },
+                "method": "GET",
+            }).then((r) => r.json()).then((res) => {
+                if(res.status_code == 200) {
+                    resolve({
+                        status_code: res.status_code,
+                        message: res.message,
+                        data: new Resource(res.data),
+                        version: res.version,
+                    });
+                } else reject(res)
             })
         })
     }

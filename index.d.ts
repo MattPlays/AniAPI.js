@@ -93,56 +93,76 @@ interface Song {
     local_spotify_url: string,
     type: AnimeSongType
 }
-interface User {
-    id: number,
-    username: string,
-    email: string | null,
-    email_verified: boolean | null,
-    role: AnimeUserRole,
-    avatar: string,
-    gender: AnimeUserGender,
-    localization: string | null,
-    has_anilist: boolean | null,
-    has_mal: boolean | null,
-}
-interface UserStory {
-    id: number,
-    user_id: number,
-    anime_id: number,
-    status: AnimeUserStoryStatus,
-    current_episode: number,
-    current_episode_ticks: number,
-}
+// interface User {
+//     id: number,
+//     username: string,
+//     email: string | null,
+//     email_verified: boolean | null,
+//     role: AnimeUserRole,
+//     avatar: string,
+//     gender: AnimeUserGender,
+//     localization: string | null,
+//     has_anilist: boolean | null,
+//     has_mal: boolean | null,
+// }
+// interface UserStory {
+//     id: number,
+//     user_id: number,
+//     anime_id: number,
+//     status: AnimeUserStoryStatus,
+//     current_episode: number,
+//     current_episode_ticks: number,
+// }
 type Resource = string[] | {
     "i18n": string,
     "label": string
 }
-interface AnimeResponse {
+type AnimeResponse = {
     status_code: number,
     message: string,
     data: string | (Anime | Anime[]),
     version: string 
 }
-interface AnimeFilters {
-    title: string,
-    anilist_id: number,
-    mal_id: number,
-    formats: AnimeFormat,
-    status: AnimeStatus,
-    year: number,
-    season: number,
-    genres: string[]
+type AnimeFilters = {
+    title?: string,
+    anilist_id?: number,
+    mal_id?: number,
+    formats?: AnimeFormat,
+    status?: AnimeStatus,
+    year?: number,
+    season?: number,
+    genres?: string[]
 }
-interface EpisodeFilters {
-    anime_id: number,
-    number: number,
-    source: string,
-    locale: string,
+type EpisodeFilters = {
+    anime_id?: number,
+    number?: number,
+    source?: string,
+    locale?: string,
 }
-interface EpisodeResponse {
+type EpisodeResponse = {
     status_code: number,
     message: string,
     data: string | (Episode | Episode[]),
+    version: string,
+}
+type SongResponse = {
+    status_code: number,
+    message: string,
+    data: string | (Song | Song[]),
+    version: string,
+}
+type SongFilters = {
+    anime_id?: number,
+    title?: string,
+    artist?: string,
+    year?: number,
+    season?: number,
+    type?: AnimeSongType
+}
+type ResourceResponse = {
+    status_code: number,
+    message: string,
+    data: Resource,
     version: string,
 }
 export class API {
@@ -151,5 +171,9 @@ export class API {
     GetAnime(filters: AnimeFilters, page: number, per_page: number): Promise<AnimeResponse>;
     GetEpisodeByID(id: string): Promise<EpisodeResponse>;
     GetEpisodes(filters: EpisodeFilters, page: number, per_page: number): Promise<EpisodeResponse>
-    DownloadAllEpisodes(anime_id: number): Promise<any>; 
+    ListAllEpisodeURLS(anime_id: number): Promise<any>;
+    GetSongByID(id: string): Promise<SongResponse>;
+    GetSongs(filters: SongFilters, page: number, per_page: number): Promise<SongResponse>;
+    GetLastAvailableResourceVersion(): Promise<any>
+    GetResource(version: string, type: AnimeResourceType): Promise<ResourceResponse>
 }
