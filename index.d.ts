@@ -29,24 +29,24 @@ enum AnimeResourceType {
     "GENRES" = 0,
     "LOCALIZATIONS" = 1,
 }
-enum AnimeUserRole {
-    "BASIC" = 0,
-    "MODERATOR" = 1,
-    "ADMINISTRATOR" = 2,
-}
-enum AnimeUserGender {
-    "UNKNOWN" = 0,
-    "MALE" = 1,
-    "FEMALE" = 2,
-}
-enum AnimeUserStoryStatus {
-    "CURRENT" = 0,
-    "PLANNING" = 1,
-    "COMPLETED" = 2,
-    "DROPPED" = 3,
-    "PAUSED" = 4,
-    "REPEATING" = 5,
-}
+// enum AnimeUserRole {
+//     "BASIC" = 0,
+//     "MODERATOR" = 1,
+//     "ADMINISTRATOR" = 2,
+// }
+// enum AnimeUserGender {
+//     "UNKNOWN" = 0,
+//     "MALE" = 1,
+//     "FEMALE" = 2,
+// }
+// enum AnimeUserStoryStatus {
+//     "CURRENT" = 0,
+//     "PLANNING" = 1,
+//     "COMPLETED" = 2,
+//     "DROPPED" = 3,
+//     "PAUSED" = 4,
+//     "REPEATING" = 5,
+// }
 interface Anime {
     id: number, 
     anilist_id: number, 
@@ -121,7 +121,12 @@ type AnimeResponse = {
     status_code: number,
     message: string,
     version: string 
-    data: Anime | Anime[],
+    data: Anime | {
+        current_page: number,
+        count: number,
+        documents: Anime[],
+        last_page: number
+    },
 }
 type AnimeFilters = {
     title?: string,
@@ -137,7 +142,12 @@ type EpisodeResponse = {
     status_code: number,
     message: string,
     version: string,
-    data: Episode | Episode[],
+    data: Episode | {
+        current_page: number,
+        count: number,
+        documents: Episode[],
+        last_page: number
+    },
 }
 type EpisodeFilters = {
     anime_id?: number,
@@ -149,7 +159,12 @@ type SongResponse = {
     status_code: number,
     message: string,
     version: string,
-    data: Song | Song[],
+    data: Song | {
+        current_page: number,
+        count: number,
+        documents: Song[],
+        last_page: number
+    },
 }
 type SongFilters = {
     anime_id?: number,
@@ -177,7 +192,6 @@ export class API {
     GetAnimes(filters: AnimeFilters, page: number, per_page: number): Promise<AnimeResponse | ErrorResponse>;
     GetEpisodeByID(id: string | number): Promise<EpisodeResponse | ErrorResponse>;
     GetEpisodes(filters: EpisodeFilters, page: number, per_page: number): Promise<EpisodeResponse | ErrorResponse>
-    ListAllEpisodeURLS(anime_id: number): Promise<string[][] | ErrorResponse>;
     GetSongByID(id: string | number): Promise<SongResponse | ErrorResponse>;
     GetSongs(filters: SongFilters, page: number, per_page: number): Promise<SongResponse | ErrorResponse>;
     GetLastAvailableResourceVersion(): Promise<ResourceResponse | ErrorResponse>
