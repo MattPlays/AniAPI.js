@@ -2,7 +2,7 @@
   "name": "@mattplays/aniapi",
   "version": "1.0.4",
   "description": "A Javascript wrapper for aniapi",
-  "main": "index.js",
+  "main": "src/index.js",
   "types": "types/index.d.js",
   "repository": {
     "type": "git",

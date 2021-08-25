@@ -1,0 +1,53 @@
+/**
+ * @readonly
+ */
+ var AnimeFormat = {
+    "TV": 0,
+    "TV_SHORT": 1,
+    "MOVIE": 2,
+    "SPECIAL": 3,
+    "OVA": 4,
+    "ONA": 5,
+    "MUSIC": 6
+};
+/**
+ * @readonly
+ */
+var AnimeStatus = {
+    "FINISHED": 0,
+    "RELEASING": 1,
+    "NOT_YET_RELEASED": 2,
+    "CANCELLED": 3
+};
+/**
+ * @readonly
+ */
+var AnimeSeasonPeriod = {
+    "WINTER": 0,
+    "SPRING": 1,
+    "SUMMER": 2,
+    "FALL": 3,
+    "UNKNOWN": 4
+};
+/**
+ * @readonly
+ */
+var AnimeSongType = {
+    "OPENING": 0,
+    "ENDING": 1,
+    "NONE": 2
+};
+/**
+ * @readonly
+ */
+var AnimeResourceType = {
+    "GENRES": 0,
+    "LOCALIZATIONS": 1
+};
+module.exports = {
+    AnimeFormat: AnimeFormat,
+    AnimeStatus: AnimeStatus,
+    AnimeSeasonPeriod: AnimeSeasonPeriod,
+    AnimeSongType: AnimeSongType,
+    AnimeResourceType: AnimeResourceType
+}
