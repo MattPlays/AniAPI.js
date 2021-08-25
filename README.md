@@ -1,4 +1,4 @@
-# AniAPI-Wrapper
+# AniAPI.js
  A Javascript wrapper for [aniapi](https://aniapi.com)
 
 # Installation
