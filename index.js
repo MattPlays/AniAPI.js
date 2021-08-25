@@ -55,6 +55,75 @@ class Resource {
         this.resource = resource;
     }
 }
+class Response {
+    constructor(status_code, message, version) {
+        this.status_code = status_code;
+        this.message = message;
+        this.version = version;
+    }
+}
+class ErrorResponse extends Response {
+    constructor(response) {
+        super(response.status_code, response.message, response.version);
+        this.data = response.data;
+    }
+}
+class AnimeResponse extends Response {
+    constructor(response) {
+        super(response.status_code, response.message, response.version);
+        if(response.data.documents) {
+            this.data = {
+                current_page: response.data.current_page,
+                count: response.data.count,
+                documents: response.data.documents.map((d) => {return new Anime(d.id, d.anilist_id, d.mal_id, d.format, d.status, d.titles, d.descriptions, d.start_date, d.end_date, d.season_period, d.season_year, d.episodes_count, d.episode_duration, d.trailer_url, d.cover_image, d.cover_color, d.banner_image, d.genres, d.sequel, d.prequel, d.score)}),
+                last_page: response.data.last_page,
+            };
+        } else {
+            this.data = new Anime(response.data.id, response.data.anilist_id, response.data.mal_id, response.data.format, response.data.status, response.data.titles, response.data.descriptions, response.data.start_date, response.data.end_date, response.data.season_period, response.data.season_year, response.data.episodes_count, response.data.episode_duration, response.data.trailer_url, response.data.cover_image, response.data.cover_color, response.data.banner_image, response.data.genres, response.data.sequel, response.data.prequel, response.data.score);
+        }
+    }
+}
+class EpisodeResponse extends Response {
+    constructor(response) {
+        super(response.status_code, response.message, response.version);
+        if(response.data.documents) {
+            this.data = {
+                current_page: response.data.current_page,
+                count: response.data.count,
+                documents: response.data.documents.map((d) => {return new Episode(d.id, d.anime_id, d.number, d.title, d.video, d.locale)}),
+                last_page: response.data.last_page
+            };
+        } else {
+            this.data = new Episode(response.data.id, response.data.anime_id, response.data.number, response.data.title, response.data.video, response.data.locale);
+        }
+    } 
+}
+class SongResponse extends Response {
+    constructor(response) {
+        super(response.status_code, response.message, response.version);
+        if(response.data.documents) {
+            this.data = {
+                current_page: response.data.current_page,
+                count: response.data.count,
+                documents: response.data.documents.map((d) => {return new Song(d.id, d.anime_id, d.title, d.artist, d.album, d.year, d.season, d.duration, d.preview_url, d.open_spotify_url, d.local_spotify_url, d.type)}),
+                last_page: response.data.last_page
+            };
+        } else {
+            this.data = new Song(response.data.id, response.data.anime_id, response.data.title, response.data.artist, response.data.album, response.data.year, response.data.season, response.data.duration, response.data.preview_url, response.data.open_spotify_url, response.data.local_spotify_url, response.data.type)
+        }
+
+    } 
+}
+class ResourceResponse extends Response {
+    constructor(response) {
+        super(response.status_code, response.message, response.version);
+        if(typeof response.data === "string") {
+            this.data = response.data;
+        } else {
+            this.data = new Resource(response.data);
+        }
+    }
+}
 // class User {
 //     constructor(id, username, email, email_verified, role, avatar, gender, localization, has_anilist, has_mal) {
 //         this.id = id;
@@ -83,6 +152,11 @@ class API {
     constructor() {
         this.baseURL = "https://api.aniapi.com/v1"
     }
+    /**
+     * 
+     * @param {string | number} id - ID of the Anime you want (https://aniapi.com/docs/resources/anime#retrieve-a-specific-anime) for more info
+     * @returns {Promise<AnimeResponse | ErrorResponse>}
+     */
     GetAnimeByID(id) {
         return new Promise(async(resolve, reject) => {
             let url = `${this.baseURL}/anime/${id}`;
@@ -92,10 +166,17 @@ class API {
                 },
                 "method": "GET"
             }).then((r) => r.json()).then((res) => {
-                (res.status_code == 200) ? resolve({stauts_code: res.status_code, message: res.message, data: new Anime(res.data.id, res.data.anilist_id, res.data.mal_id, res.data.format, res.data.status, res.data.titles, res.data.descriptions, res.data.start_date, res.data.end_date, res.data.season_period, res.data.season_year, res.data.episodes_count, res.data.episode_duration, res.data.trailer_url, res.data.cover_image, res.data.cover_color, res.data.banner_image, res.data.genres, res.data.sequel, res.data.prequel, res.data.score), verions: res.version}) : reject(res)
+                (res.status_code == 200) ? resolve(new AnimeResponse(res)) : reject(new ErrorResponse(res))
             }).catch(reject);
         })
     }
+    /**
+     * 
+     * @param {object} filters - Filters you want to apply [At least 1] (https://aniapi.com/docs/resources/anime#parameters-1) for more info
+     * @param {number} page - The page number of the paginated results 
+     * @param {number} per_page - Number of results you want per page  
+     * @returns {Promise<AnimeResponse | ErrorResponse>}
+     */
     GetAnimes(filters = {}, page = 1, per_page = 100) {
         return new Promise(async(resolve, reject) => {
             if(!filters.title && !filters.anilist_id && !filters.mal_id && !filters.formats && !filters.status && !filters.year && !filters.season && !filters.genres) throw new Error("At least 1 filter must be provided");
@@ -115,22 +196,15 @@ class API {
                 },
                 "method": "GET"
             }).then((r) => r.json()).then((res) => {
-                if(res.status_code == 200) {
-                    resolve({
-                        status_code: res.status_code,
-                        message: res.message,
-                        data: {
-                            current_page: res.data.current_page,
-                            count: res.data.count,
-                            documents: res.data.documents.map((d) => {return new Anime(d.id, d.anilist_id, d.mal_id, d.format, d.status, d.titles, d.descriptions, d.start_date, d.end_date, d.season_period, d.season_year, d.episodes_count, d.episode_duration, d.trailer_url, d.cover_image, d.cover_color, d.banner_image, d.genres, d.sequel, d.prequel, d.score)}),
-                            last_page: res.data.last_page,
-                        },
-                        version: res.version
-                    })
-                } else reject(res);
+                (res.status_code == 200) ? resolve(new AnimeResponse(res)) : reject(new ErrorResponse(res))
             })
         })
     }
+    /**
+     * 
+     * @param {string | number} id - ID Of the Episode you want (https://aniapi.com/docs/resources/episode#retrieve-a-specific-episode) for more info 
+     * @returns {Promise<EpisodeResponse | ErrorResponse>}
+     */
     GetEpisodeByID(id) {
         return new Promise(async(resolve, reject) => {
             let url = `${this.baseURL}/episode/${id}`
@@ -140,17 +214,17 @@ class API {
                 },
                 "method": "GET"
             }).then((r) => r.json()).then((res) => {
-                if(res.status_code == 200) {
-                    resolve({
-                        status_code: res.status_code,
-                        message: res.message,
-                        data: new Episode(res.data.id, res.data.anime_id, res.data.number, res.data.title, res.data.video, res.data.locale),
-                        version: res.version
-                    })
-                } else reject(res);
+                (res.status_code == 200) ? resolve(new EpisodeResponse(res)) : reject(new ErrorResponse(res));
             })
         })
     }
+    /**
+     * 
+     * @param {object} filters - Filters you want to apply [At least 1] (https://aniapi.com/docs/resources/episode#parameters-1) for more info  
+     * @param {number} page - The page number of the paginated results 
+     * @param {number} per_page - Number of results you want per page 
+     * @returns {Promise<EpisodeResponse | ErrorResponse>}
+     */
     GetEpisodes(filters = {}, page = 1, per_page = 100) {
         return new Promise(async(resolve, reject) => {
             let url = `${this.baseURL}/episode`
@@ -165,26 +239,14 @@ class API {
                 },
                 "method": "GET"
             }).then((r) => r.json()).then((res) => {
-                if(res.status_code == 200) {
-                    resolve({
-                        status_code: res.status_code,
-                        message: res.message,
-                        data: {
-                            current_page: res.data.current_page,
-                            count: res.data.count,
-                            documents: res.data.documents.map((d) => {return new Episode(d.id, d.anime_id, d.number, d.title, d.video, d.locale)}),
-                            last_page: res.data.last_page
-                        },
-                        version: res.version
-                    })
-                } else reject(res);
+                (res.status_code == 200) ? resolve(new EpisodeResponse(res)) : reject(new ErrorResponse(res));
             })
         })
     }
     /**
      * 
      * @param {string} anime_id - The Anime ID
-     * @returns {[string[]]}
+     * @returns {string[][]}
      */
     ListAllEpisodeURLS(anime_id) {
         return new Promise(async(resolve, reject) => {
@@ -215,7 +277,7 @@ class API {
     /**
      * 
      * @param {string} id - ID of the song you want https://aniapi.com/docs/resources/song#retrieve-a-specific-song for more details
-     * @returns {Promise<any>}
+     * @returns {Promise<SongResponse | ErrorResponse>}
      */
     GetSongByID(id) {
         return new Promise(async(resolve, reject) => {
@@ -226,14 +288,7 @@ class API {
                 },
                 "method": "GET"
             }).then((r) => r.json()).then((res) => {
-                if(res.status_code == 200) {
-                    resolve({
-                        status_code: res.status_code,
-                        message: res.message,
-                        data: new Song(res.data.id, res.data.anime_id, res.data.title, res.data.artist, res.data.album, res.data.year, res.data.season, res.data.duration, res.data.preview_url, res.data.open_spotify_url, res.data.local_spotify_url, res.data.type),
-                        version: res.version,
-                    })
-                }else reject(res);
+                (res.status_code == 200) ? resolve(new SongResponse(res)) : reject(new ErrorResponse(res));
             })
         })
     }
@@ -242,17 +297,7 @@ class API {
      * @param {object} filters - Check https://aniapi.com/docs/resources/song#try-it-1 for help
      * @param {number} page - Pagination
      * @param {number} per_page - How many results per page
-     * @returns {{
-     *  status_code: number,
-     *  message: string,
-     *  data: {
-     *      current_page: number,
-     *      count: number,
-     *      documents: Song[],
-     *      last_page: number
-     *  },
-     * version: number
-     * }}
+     * @returns {Promise<SongResponse | ErrorResponse>}
      */
     GetSongs(filters = {}, page = 1, per_page = 100) {
         return new Promise(async(resolve, reject) => {
@@ -270,22 +315,14 @@ class API {
                 },
                 "method": "GET"
             }).then((r) => r.json()).then((res) => {
-                if(res.status_code == 200) {
-                    resolve({
-                        status_code: res.status_code,
-                        mesasge: res.message,
-                        data: {
-                            current_page: res.data.current_page,
-                            count: res.data.count,
-                            documents: res.data.documents.map((d) => {return new Song(d.id, d.anime_id, d.title, d.artist, d.album, d.year, d.season, d.duration, d.preview_url, d.open_spotify_url, d.local_spotify_url, d.type)}),
-                            last_page: res.data.last_page,
-                        },
-                        version: res.version,
-                    })
-                } else reject(res);
+                (res.status_code == 200) ? resolve(new SongResponse(res)) : reject(new ErrorResponse(res));
             })
         })
     }
+    /**
+     * 
+     * @returns {Promise<ResourceResponse | ErrorResponse>}
+     */
     GetLastAvailableResourceVersion() {
         return new Promise(async(resolve, reject) => {
             let url = `${this.baseURL}/resources`
@@ -295,30 +332,26 @@ class API {
                 },
                 "method": "GET",
             }).then((r) => r.json()).then((res) => {
-                if(res.status_code == 200) {
-                    resolve(res);
-                } else reject(res)
+                (res.status_code == 200) ? resolve(new ResourceResponse(res)) : reject(new ErrorResponse(res));
             })
         })
     }
+    /**
+     * 
+     * @param {string} version - Use GetLastAvailableResourceVersion for most up to date resource version
+     * @param {Array<0 | 1 | 3>} type - (https://aniapi.com/docs/resources/song#type)
+     * @returns 
+     */
     GetResource(version = "1.0", type) {
         return new Promise(async(resolve, reject) => {
             let url = `${this.baseURL}/resources/${version}/${type}`
-            let url = `${this.baseURL}/resources`
             await fetch(url, {
                 "headers": {
                     "Accept": "application/json"
                 },
                 "method": "GET",
             }).then((r) => r.json()).then((res) => {
-                if(res.status_code == 200) {
-                    resolve({
-                        status_code: res.status_code,
-                        message: res.message,
-                        data: new Resource(res.data),
-                        version: res.version,
-                    });
-                } else reject(res)
+                (res.status_code == 200) ? resolve(new ResourceResponse(res)) : reject(new ErrorResponse(res));
             })
         })
     }

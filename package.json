@@ -22,9 +22,6 @@
   },
   "homepage": "https://github.com/MattPlays/AniAPI-Wrapper#readme",
   "dependencies": {
-    "fs": "^0.0.1-security",
-    "https": "^1.0.0",
-    "node-fetch": "^2.6.1",
-    "path": "^0.12.7"
+    "node-fetch": "^2.6.1"
   }
 }

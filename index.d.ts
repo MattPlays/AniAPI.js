@@ -120,18 +120,24 @@ type Resource = string[] | {
 type AnimeResponse = {
     status_code: number,
     message: string,
-    data: string | (Anime | Anime[]),
     version: string 
+    data: Anime | Anime[],
 }
 type AnimeFilters = {
     title?: string,
     anilist_id?: number,
     mal_id?: number,
-    formats?: AnimeFormat,
-    status?: AnimeStatus,
+    formats?: AnimeFormat[],
+    status?: AnimeStatus[],
     year?: number,
     season?: number,
     genres?: string[]
+}
+type EpisodeResponse = {
+    status_code: number,
+    message: string,
+    version: string,
+    data: Episode | Episode[],
 }
 type EpisodeFilters = {
     anime_id?: number,
@@ -139,17 +145,11 @@ type EpisodeFilters = {
     source?: string,
     locale?: string,
 }
-type EpisodeResponse = {
-    status_code: number,
-    message: string,
-    data: string | (Episode | Episode[]),
-    version: string,
-}
 type SongResponse = {
     status_code: number,
     message: string,
-    data: string | (Song | Song[]),
     version: string,
+    data: Song | Song[],
 }
 type SongFilters = {
     anime_id?: number,
@@ -157,23 +157,29 @@ type SongFilters = {
     artist?: string,
     year?: number,
     season?: number,
-    type?: AnimeSongType
+    type?: AnimeSongType[]
 }
 type ResourceResponse = {
     status_code: number,
     message: string,
-    data: Resource,
     version: string,
+    data: Resource,
+}
+type ErrorResponse = {
+    status_code: number,
+    message: string,
+    version: string,
+    data: string,
 }
 export class API {
     constructor() {};
-    GetAnimeByID(id: string): Promise<AnimeResponse>;
-    GetAnime(filters: AnimeFilters, page: number, per_page: number): Promise<AnimeResponse>;
-    GetEpisodeByID(id: string): Promise<EpisodeResponse>;
-    GetEpisodes(filters: EpisodeFilters, page: number, per_page: number): Promise<EpisodeResponse>
-    ListAllEpisodeURLS(anime_id: number): Promise<any>;
-    GetSongByID(id: string): Promise<SongResponse>;
-    GetSongs(filters: SongFilters, page: number, per_page: number): Promise<SongResponse>;
-    GetLastAvailableResourceVersion(): Promise<any>
-    GetResource(version: string, type: AnimeResourceType): Promise<ResourceResponse>
+    GetAnimeByID(id: string | number): Promise<AnimeResponse | ErrorResponse>;
+    GetAnimes(filters: AnimeFilters, page: number, per_page: number): Promise<AnimeResponse | ErrorResponse>;
+    GetEpisodeByID(id: string | number): Promise<EpisodeResponse | ErrorResponse>;
+    GetEpisodes(filters: EpisodeFilters, page: number, per_page: number): Promise<EpisodeResponse | ErrorResponse>
+    ListAllEpisodeURLS(anime_id: number): Promise<string[][] | ErrorResponse>;
+    GetSongByID(id: string | number): Promise<SongResponse | ErrorResponse>;
+    GetSongs(filters: SongFilters, page: number, per_page: number): Promise<SongResponse | ErrorResponse>;
+    GetLastAvailableResourceVersion(): Promise<ResourceResponse | ErrorResponse>
+    GetResource(version: string, type: AnimeResourceType): Promise<ResourceResponse | ErrorResponse>
 }
