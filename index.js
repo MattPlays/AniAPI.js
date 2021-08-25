@@ -175,30 +175,6 @@ class ResourceResponse extends Response {
         }
     }
 }
-// class User {
-//     constructor(id, username, email, email_verified, role, avatar, gender, localization, has_anilist, has_mal) {
-//         this.id = id;
-//         this.username = username;
-//         this.email = email ?? null;
-//         this.email_verified = email_verified ?? null;
-//         this.role = role;
-//         this.avatar = avatar;
-//         this.gender = gender;
-//         this.localization = localization ?? null;
-//         this.has_anilist = has_anilist ?? null;
-//         this.has_mal = has_mal ?? null;
-//     }
-// }
-// class UserStory {
-//     constructor(id, user_id, anime_id, status, current_episode, current_episode_ticks) {
-//         this.id = id;
-//         this.user_id = user_id;
-//         this.anime_id = anime_id;
-//         this.status = status;
-//         this.current_episode = current_episode;
-//         this.current_episode_ticks = current_episode_ticks;
-//     }
-// }
 class API {
     constructor() {
         this.baseURL = "https://api.aniapi.com/v1"
