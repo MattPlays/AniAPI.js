@@ -1,6 +1,6 @@
 {
   "name": "@mattplays/aniapi",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A Javascript wrapper for aniapi",
   "main": "index.js",
   "types": "types/index.d.js",
