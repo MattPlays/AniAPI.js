@@ -8,8 +8,8 @@ npm i @mattplays/aniapi
 
 # Usage
 ```javascript
-const ANIAPI = require("@mattplays/aniapi").API;
-const API = new ANIAPI();
+const ANIAPI = require("@mattplays/aniapi");
+const API = new ANIAPI.API();
 ```
 
 For more info on the provided functions with the exception of [User](https://aniapi.com/docs/resources/user) and [UserStory](https://aniapi.com/docs/resources/user_story): 
@@ -46,8 +46,8 @@ All Responses from this Wrapper should be in accordance with the [docs](https://
 
 ## Usage
 ```javascript
-const ANIAPI = require("@mattplays/aniapi").API;
-const API = new ANIAPI();
+const ANIAPI = require("@mattplays/aniapi");
+const API = new ANIAPI.API();
 
 API.GetAnimeByID(11).then((data) => {
     // Your Code HERE :D
@@ -62,7 +62,7 @@ API.GetAnimeByID(11).then((data) => {
 ## Parameters
 | Parameter | Type | Description |
 | --------- | ---- | ----------- |
-| filters | `object` | Filters you want to apply [At least 1] - [more info](https://aniapi.com/docs/resources/anime#parameters-1)
+| filters | `AnimeFilters` | Filters you want to apply [At least 1] - [more info](https://aniapi.com/docs/resources/anime#parameters-1)
 | page | `number` | The page number of the paginated results |
 | per_page | `number` | Number of results you want per page |
 
@@ -80,8 +80,8 @@ API.GetAnimeByID(11).then((data) => {
 
 ## Usage
 ```javascript
-const ANIAPI = require("@mattplays/aniapi").API;
-const API = new ANIAPI();
+const ANIAPI = require("@mattplays/aniapi");
+const API = new ANIAPI.API();
 
 API.GetAnimes({
     genres: [
@@ -89,8 +89,8 @@ API.GetAnimes({
       "Adventure",
       "Comedy"
     ],
-    formats: [0,2] // 0 is for TV, 2 is for Movie,
-    status: [0,1] // 0 is for Finished, 1 is for Releasing
+    formats: [ANIAPI.ENUMS.AnimeFormat.TV, ANIAPI.ENUMS.AnimeFormat.MOVIE], // 0 is for TV, 2 is for Movie,
+    status: [ANIAPI.ENUMS.AnimeStatus.FINISHED, ANIAPI.ENUMS.AnimeStatus.RELEASING] // 0 is for Finished, 1 is for Releasing
 }, 1, 100).then((data) => {
     // Your Code Here :D
 }).catch((err) => {
@@ -107,8 +107,8 @@ API.GetAnimes({
 
 ## Usage
 ```javascript
-const ANIAPI = require("@mattplays/aniapi").API;
-const API = new ANIAPI();
+const ANIAPI = require("@mattplays/aniapi");
+const API = new ANIAPI.API();
 
 API.GetEpisodeByID(485).then((data) => {
     // Your Code Here :D
@@ -122,7 +122,7 @@ API.GetEpisodeByID(485).then((data) => {
 ## Parameters
 | Parameter | Type | Description |
 | --------- | ---- | ----------- |
-| filters | `object` | Filters you want to apply [At least 1] - [more info](https://aniapi.com/docs/resources/episode#parameters-1)
+| filters | `EpisodeFilters` | Filters you want to apply [At least 1] - [more info](https://aniapi.com/docs/resources/episode#parameters-1)
 | page | `number` | The page number of the paginated results |
 | per_page | `number` | Number of results you want per page |
 
@@ -136,13 +136,13 @@ API.GetEpisodeByID(485).then((data) => {
 
 ## Usage
 ```javascript
-const ANIAPI = require("@mattplays/aniapi").API;
-const API = new ANIAPI();
+const ANIAPI = require("@mattplays/aniapi");
+const API = new ANIAPI.API();
 
 API.GetEpisodes({
     anime_id: 11,
-    source: "dreamsub"
-    locale: "it"
+    source: "dreamsub",
+    locale: "it",
 }, 1, 100).then((data) => {
     // Your Code Here :D
 }).catch((err) => {
@@ -159,8 +159,8 @@ API.GetEpisodes({
 
 ## Usage
 ```javascript
-const ANIAPI = require("@mattplays/aniapi").API;
-const API = new ANIAPI();
+const ANIAPI = require("@mattplays/aniapi");
+const API = new ANIAPI.API();
 
 API.GetSongByID(11).then((data) => {
     // Your Code Here :D
@@ -174,7 +174,7 @@ API.GetSongByID(11).then((data) => {
 ## Parameters
 | Parameter | Type | Description |
 | --------- | ---- | ----------- |
-| filters | `object` | Filters you want to apply [At least 1] - [more info](https://aniapi.com/docs/resources/song#parameters-1)
+| filters | `SongFilters` | Filters you want to apply [At least 1] - [more info](https://aniapi.com/docs/resources/song#parameters-1)
 | page | `number` | The page number of the paginated results |
 | per_page | `number` | Number of results you want per page |
 
@@ -190,13 +190,13 @@ API.GetSongByID(11).then((data) => {
 
 ## Usage
 ```javascript
-const ANIAPI = require("@mattplays/aniapi").API;
-const API = new ANIAPI();
+const ANIAPI = require("@mattplays/aniapi");
+const API = new ANIAPI.API();
 
 API.GetSongs({
     anime_id: 4,
-    season: [0, 1] // 0 Is for Winter, 1 is for Spring
-    type: [0 , 1] // 0 is for Opening, 1 is for Ending
+    season: [ANIAPI.ENUMS.AnimeSeasonPeriod.WINTER, ANIAPI.ENUMS.AnimeSeasonPeriod.SPRING], // 0 Is for Winter, 1 is for Spring
+    type: [ANIAPI.ENUMS.AnimeSongType.OPENING, ANIAPI.ENUMS.AnimeSongType.ENDING] // 0 is for Opening, 1 is for Ending
 }).then((data) => {
     // Your Code Here :D
 }).catch((err) => {
@@ -208,8 +208,8 @@ API.GetSongs({
 
 ## Usage
 ```javascript
-const ANIAPI = require("@mattplays/aniapi").API;
-const API = new ANIAPI();
+const ANIAPI = require("@mattplays/aniapi");
+const API = new ANIAPI.API();
 
 API.GetLastAvailableResourceVersion().then((data) => {
     // Your Code Here :D
@@ -228,10 +228,10 @@ API.GetLastAvailableResourceVersion().then((data) => {
 
 ## Usage
 ```javascript
-const ANIAPI = require("@mattplays/aniapi").API;
-const API = new ANIAPI();
+const ANIAPI = require("@mattplays/aniapi");
+const API = new ANIAPI.API();
 
-API.GetResource("1.0", 0).then((data) => {
+API.GetResource("1.0", ANIAPI.ENUMS.AnimeResourceType.GENRES).then((data) => {
     // Your Code Here :D
 }).catch((err) => {
     // Handle error Here D:
@@ -244,51 +244,51 @@ API.GetResource("1.0", 0).then((data) => {
 
 Possible format enum values
 ```javascript
-0: "TV",
-1: "TV_SHORT",
-2: "MOVIE",
-3: "SPECIAL",
-4: "OVA",
-5: "ONA",
-6: "MUSIC"
+"TV": 0,
+"TV_SHORT": 1,
+"MOVIE": 2,
+"SPECIAL": 3,
+"OVA": 4,
+"ONA": 5,
+"MUSIC": 6
 ```
 
 ## AnimeStatus <a id="enums-status">
 
 Possible status enum values
 ```javascript
-0: "FINISHED",
-1: "RELEASING",
-2: "NOT_YET_RELEASED",
-3: "CANCELLED"
+"FINISHED": 0,
+"RELEASING": 1,
+"NOT_YET_RELEASED": 2,
+"CANCELLED": 3
 ```
 
 ## AnimeSeasonPeriod <a id="enums-season">
 
 Possible season enum values
 ```javascript
-0: "WINTER",
-1: "SPRING",
-2: "SUMMER",
-3: "FALL",
-4: "UNKNOWN"
+"WINTER": 0,
+"SPRING": 1,
+"SUMMER": 2,
+"FALL": 3,
+"UNKNOWN": 4
 ```
 
 ## AnimeSongType <a id="enums-song">
 
 Possible type enum values
 ```javascript
-0: "OPENING",
-1: "ENDING",
-2: "NONE"
+"OPENING": 0,
+"ENDING": 1,
+"NONE": 2
 ```
 
 ## AnimeResourceType <a id="enums-resource">
 
 Possible type enum values
 ```javascript
-0: "GENRES",
-1: "LOCALIZATIONS"
+"GENRES": 0,
+"LOCALIZATIONS": 1
 ```
 
 # License
