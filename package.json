@@ -6,7 +6,7 @@
   "types": "types/index.d.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MattPlays/AniAPI-Wrapper.git"
+    "url": "git+https://github.com/MattPlays/AniAPI.js.git"
   },
   "keywords": [
     "API",
@@ -16,9 +16,9 @@
   "author": "MattPlays (https://github.com/MattPlays/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/MattPlays/AniAPI-Wrapper/issues"
+    "url": "https://github.com/MattPlays/AniAPI.js/issues"
   },
-  "homepage": "https://github.com/MattPlays/AniAPI-Wrapper#readme",
+  "homepage": "https://github.com/MattPlays/AniAPI.js#readme",
   "dependencies": {
     "node-fetch": "^2.6.1"
   }
