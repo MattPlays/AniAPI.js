@@ -26,12 +26,17 @@ For more info on the provided functions with the exception of [User](https://ani
 4. [Resource](https://aniapi.com/docs/resources/resource)
     1. [GetLastAvailableResourceVersion](#lastavailable)
     2. [GetResource](#getresource)
-5. [Enums](#enums)
+5. [User](https://aniapi.com/docs/resources/user)
+    1. [GetUserByID](#getuserbyid)
+    2. [GetUsers](#getusers)
+6. [Enums](#enums)
     1. [AnimeFormat](#enums-formats)
     2. [AnimeStatus](#enums-status)
     3. [AnimeSeasonPeriod](#enums-season)
     4. [AnimeSongType](#enums-song)
     5. [AnimeResourceType](#enums-resource)
+    6. [UserRole](#enums-userrole)
+    7. [UserGender](#enums-usergender)
 
 All Responses from this Wrapper should be in accordance with the [docs](https://aniapi.com/docs/)
 
@@ -238,11 +243,59 @@ API.GetResource("1.0", ANIAPI.ENUMS.AnimeResourceType.GENRES).then((data) => {
 });
 ```
 
+# GetUserByID <a id="getuserbyid">
+
+## Parameters
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| id | `string` | ID of the User you want - [more info](https://aniapi.com/docs/resources/user#retrieve-a-specific-user)
+
+## Usage
+```javascript
+const ANIAPI = require("@mattplays/aniapi");
+const API = new ANIAPI.API();
+
+API.GetUserByID(134).then((data) => {
+    // Your Code Here :D
+}).catch((err) => {
+    // Handle error Here D:
+})
+```
+
+# GetUsers <a id="getusers">
+
+## Parameters
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| filters | `UserFilters` | Filters you want to apply [At least 1] - [more info](https://aniapi.com/docs/resources/user#parameters-1)
+| page | `number` | The page number of the paginated results |
+| per_page | `number` | Number of results you want per page |
+
+### Currently the following filters and their types are:
+| Filter | Type | Description |
+| ------ | ---- | ----------- |
+| username | `number` | A case-insensitive pattern filter on the list based on the `username` field value. |
+| email | `string` | A case-sensitive filter on the list based on the `email` field value. |
+
+## Usage 
+```javascript
+const ANIAPI = require("@mattplays/aniapi");
+const API = new ANIAPI.API();
+
+API.GetUsers({
+    username: "SomebodyRandom",
+    email: "real@email.com"
+}, 1, 100).then((data) => {
+    // Your Code Here :D
+}).catch((err) => {
+    // Handle error Here D:
+})
+```
 # Enums <a id="enums">
 
 ## AnimeFormat <a id="enums-formats">
 
-Possible format enum values
+Possible enum values
 ```javascript
 "TV": 0,
 "TV_SHORT": 1,
@@ -255,7 +308,7 @@ Possible format enum values
 
 ## AnimeStatus <a id="enums-status">
 
-Possible status enum values
+Possible enum values
 ```javascript
 "FINISHED": 0,
 "RELEASING": 1,
@@ -265,7 +318,7 @@ Possible status enum values
 
 ## AnimeSeasonPeriod <a id="enums-season">
 
-Possible season enum values
+Possible enum values
 ```javascript
 "WINTER": 0,
 "SPRING": 1,
@@ -276,7 +329,7 @@ Possible season enum values
 
 ## AnimeSongType <a id="enums-song">
 
-Possible type enum values
+Possible enum values
 ```javascript
 "OPENING": 0,
 "ENDING": 1,
@@ -285,11 +338,29 @@ Possible type enum values
 
 ## AnimeResourceType <a id="enums-resource">
 
-Possible type enum values
+Possible enum values
 ```javascript
 "GENRES": 0,
 "LOCALIZATIONS": 1
 ```
+
+## UserRole <a id="enums-userrole">
+
+Possible enum values
+```javascript
+"BASIC": 0,
+"MODERATOR": 1,
+"ADMINISTRATOR": 2,
+```
+
+## UserGender <a id="enums-usergender">
+Possible enum values
+```javascript
+"UNKNOWN": 0,
+"MALE": 1,
+"FEMALE": 2,
+```
+
 
 # License
 MIT License - Copyright (c) 2021 MattPlays [License](https://github.com/MattPlays/AniAPI-Wrapper/blob/main/LICENSE)
