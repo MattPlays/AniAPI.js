@@ -53,8 +53,19 @@ var SongFilters = {
     season: null,
     type: null
 }
+/**
+ * @typedef UserFilters
+ * @type {object}
+ * @property {?string} username
+ * @property {?string} email
+ */
+var UserFilters = {
+    username: null,
+    email: null,
+}
 module.exports = {
     AnimeFilters: AnimeFilters,
     EpisodeFilters: EpisodeFilters,
-    SongFilters: SongFilters
+    SongFilters: SongFilters,
+    UserFilters: UserFilters
 }

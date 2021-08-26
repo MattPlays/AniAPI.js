@@ -1,6 +1,6 @@
 const fetch = require("node-fetch");
-const {AnimeResponse, EpisodeResponse, SongResponse, ResourceResponse, ErrorResponse} = require("./Responses");
-const {AnimeFilters, EpisodeFilters, SongFilters} = require("./Filters");
+const {AnimeResponse, EpisodeResponse, UserResponse, SongResponse, ResourceResponse, ErrorResponse} = require("./Responses");
+const {AnimeFilters, EpisodeFilters, SongFilters, UserFilters} = require("./Filters");
 const Enums = require("./Enums");
 class API {
     constructor() {
@@ -189,6 +189,51 @@ class API {
         }).then((r) => r.json()).then((res) => {
             if(res.status_code == 200) {
                 return new ResourceResponse(res)
+            } else {
+                return new ErrorResponse(res)
+            }
+        }).catch((err) => {throw new Error(err)});
+    }
+    /**
+     * 
+     * @param {string | number} id - Unique identifier for an User.
+     * @returns {Promise<UserResponse | ErrorResponse>}
+     */
+    GetUserByID(id) {
+        const url = `${this.baseURL}/user/${id}`
+        return fetch(url, {
+            "headers": {
+                "Accept": "application/json"
+            },
+            "method": "GET",
+        }).then((r) => r.json()).then((res) => {
+            if(res.status_code == 200) {
+                return new UserResponse(res)
+            } else {
+                return new ErrorResponse(res);
+            }
+        }).catch((err) => {throw new Error(err)});
+    }
+    /**
+     * 
+     * @param {UserFilters} filters - Filters you want to apply [At least 1] (https://aniapi.com/docs/resources/user#parameters-1) for more info  
+     * @param {!number} page - Pagination
+     * @param {!number} per_page - How many results per page
+     * @returns {Promise<UserResponse | ErrorResponse>}
+     */
+    GetUsers(filters = {}, page = 1, per_page = 100) {
+        let url = `${this.baseURL}/user`
+        if(filters.username && Object.keys(filters).indexOf["username"] > 0) {url += `&username=${filters.username}`} else if(filters.username) {url += `?username=${filters.username}`};
+        if(filters.username && Object.keys(filters).indexOf["email"] > 0) {url += `&email=${filters.email}`} else if(filters.email) {url += `?email=${filters.email}`};
+        url += `&page=${page}&per_page=${per_page}`;
+        return fetch(url, {
+            "headers": {
+                "Accept": "application/json"
+            },
+            "method": "GET",
+        }).then(r => r.json()).then((res) => {
+            if(res.status_code == 200) {
+                return new UserResponse(res);
             } else {
                 return new ErrorResponse(res)
             }

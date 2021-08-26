@@ -29,3 +29,21 @@ export enum AnimeResourceType {
     "GENRES" = 0,
     "LOCALIZATIONS" = 1,
 }
+export enum UserRole {
+    "BASIC" = 0,
+    "MODERATOR" = 1,
+    "ADMINISTRATOR" = 2,
+}
+export enum UserGender {
+    "UNKNOWN" = 0,
+    "MALE" = 1,
+    "FEMALE" = 2,
+}
+export enum UserStoryStatus {
+    "CURRENT" = 0,
+    "PLANNING" = 1,
+    "COMPLETED"=  2,
+    "DROPPED" = 3,
+    "PAUSED" = 4,
+    "REPEATING" = 5
+}

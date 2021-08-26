@@ -1,6 +1,7 @@
 import {AnimeResourceType} from './Enums';
-import {AnimeFilters, EpisodeFilters, SongFilters} from './Filters';
-import { AnimeResponse, EpisodeResponse, SongResponse, ResourceResponse, ErrorResponse } from './Responses';
+import {AnimeFilters, EpisodeFilters, UserFilters, SongFilters} from './Filters';
+import { AnimeResponse, EpisodeResponse, UserResponse, SongResponse, ResourceResponse, ErrorResponse } from './Responses';
+import ENUMS from "./Enums";
 export class API {
     constructor();
     GetAnimeByID(id: string | number): Promise<AnimeResponse | ErrorResponse>;
@@ -9,6 +10,9 @@ export class API {
     GetEpisodes(filters: EpisodeFilters, page: number, per_page: number): Promise<EpisodeResponse | ErrorResponse>
     GetSongByID(id: string | number): Promise<SongResponse | ErrorResponse>;
     GetSongs(filters: SongFilters, page: number, per_page: number): Promise<SongResponse | ErrorResponse>;
-    GetLastAvailableResourceVersion(): Promise<ResourceResponse | ErrorResponse>
-    GetResource(version: string, type: AnimeResourceType): Promise<ResourceResponse | ErrorResponse>
+    GetLastAvailableResourceVersion(): Promise<ResourceResponse | ErrorResponse>;
+    GetResource(version: string, type: AnimeResourceType): Promise<ResourceResponse | ErrorResponse>;
+    GetUserByID(id: string | null): Promise<UserResponse, ErrorResponse>;
+    GetUsers(filters: UserFilters, page: number, per_page: number): Promise<UserResponse, ErrorResponse>;
 }
+export {ENUMS};

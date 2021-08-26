@@ -2,6 +2,8 @@ const Anime = require("./Anime");
 const Episode = require("./Episode");
 const Resource = require("./Resource");
 const Song = require("./Song");
+const User = require("./User");
+const UserStory = require("./UserStory");
 class Response {
     constructor(status_code, message, version) {
         this.status_code = status_code;
@@ -71,10 +73,26 @@ class ResourceResponse extends Response {
         }
     }
 }
+class UserResponse extends Response {
+    constructor(response) {
+        super(response.status_code, response.message, response.version);
+        if(response.data.documents) {
+            this.data = {
+                current_page: response.data.current_page,
+                count: response.data.count,
+                documents: response.data.documents.map((d) => {return new User(d.id, d.username, (d.email || null), (d.email_verified || null), d.role, d.avatar, d.gender, (d.localization || null), (d.has_anilist || null), (d.has_mal || null))}),
+                last_page: response.data.last_page
+            }
+        } else {
+            this.data = new User(response.data.id, response.data.username, response.data.email, response.data.email_verified, response.data.role, response.data.avatar, response.data.gender, response.data.localization, response.data.has_anilist, response.data.has_mal)
+        }
+    }
+}
 module.exports = {
     ErrorResponse: ErrorResponse,
     AnimeResponse: AnimeResponse,
     EpisodeResponse: EpisodeResponse,
     SongResponse: SongResponse,
+    UserResponse: UserResponse,
     ResourceResponse: ResourceResponse,
 }
