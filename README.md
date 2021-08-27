@@ -7,9 +7,14 @@ npm i @mattplays/aniapi
 ```
 
 # Usage
+
+Creating a new instance of the API with a JWT is completely **optional**. You might run into some unauthorizated responses though.
+
+To get your JWT login to ANIAPI [here](https://aniapi.com/login)
+
 ```javascript
 const ANIAPI = require("@mattplays/aniapi");
-const API = new ANIAPI.API();
+const API = new ANIAPI.API("DUMMY_JWT"); 
 ```
 
 For more info on the provided functions with the exception of [User](https://aniapi.com/docs/resources/user) and [UserStory](https://aniapi.com/docs/resources/user_story): 
@@ -52,7 +57,7 @@ All Responses from this Wrapper should be in accordance with the [docs](https://
 ## Usage
 ```javascript
 const ANIAPI = require("@mattplays/aniapi");
-const API = new ANIAPI.API();
+const API = new ANIAPI.API("DUMMY_JWT");
 
 API.GetAnimeByID(11).then((data) => {
     // Your Code HERE :D
@@ -86,7 +91,7 @@ API.GetAnimeByID(11).then((data) => {
 ## Usage
 ```javascript
 const ANIAPI = require("@mattplays/aniapi");
-const API = new ANIAPI.API();
+const API = new ANIAPI.API("DUMMY_JWT");
 
 API.GetAnimes({
     genres: [
@@ -113,7 +118,7 @@ API.GetAnimes({
 ## Usage
 ```javascript
 const ANIAPI = require("@mattplays/aniapi");
-const API = new ANIAPI.API();
+const API = new ANIAPI.API("DUMMY_JWT");
 
 API.GetEpisodeByID(485).then((data) => {
     // Your Code Here :D
@@ -142,7 +147,7 @@ API.GetEpisodeByID(485).then((data) => {
 ## Usage
 ```javascript
 const ANIAPI = require("@mattplays/aniapi");
-const API = new ANIAPI.API();
+const API = new ANIAPI.API("DUMMY_JWT");
 
 API.GetEpisodes({
     anime_id: 11,
@@ -165,7 +170,7 @@ API.GetEpisodes({
 ## Usage
 ```javascript
 const ANIAPI = require("@mattplays/aniapi");
-const API = new ANIAPI.API();
+const API = new ANIAPI.API("DUMMY_JWT");
 
 API.GetSongByID(11).then((data) => {
     // Your Code Here :D
@@ -196,7 +201,7 @@ API.GetSongByID(11).then((data) => {
 ## Usage
 ```javascript
 const ANIAPI = require("@mattplays/aniapi");
-const API = new ANIAPI.API();
+const API = new ANIAPI.API("DUMMY_JWT");
 
 API.GetSongs({
     anime_id: 4,
@@ -214,7 +219,7 @@ API.GetSongs({
 ## Usage
 ```javascript
 const ANIAPI = require("@mattplays/aniapi");
-const API = new ANIAPI.API();
+const API = new ANIAPI.API("DUMMY_JWT");
 
 API.GetLastAvailableResourceVersion().then((data) => {
     // Your Code Here :D
@@ -234,7 +239,7 @@ API.GetLastAvailableResourceVersion().then((data) => {
 ## Usage
 ```javascript
 const ANIAPI = require("@mattplays/aniapi");
-const API = new ANIAPI.API();
+const API = new ANIAPI.API("DUMMY_JWT");
 
 API.GetResource("1.0", ANIAPI.ENUMS.AnimeResourceType.GENRES).then((data) => {
     // Your Code Here :D
@@ -253,7 +258,7 @@ API.GetResource("1.0", ANIAPI.ENUMS.AnimeResourceType.GENRES).then((data) => {
 ## Usage
 ```javascript
 const ANIAPI = require("@mattplays/aniapi");
-const API = new ANIAPI.API();
+const API = new ANIAPI.API("DUMMY_JWT");
 
 API.GetUserByID(134).then((data) => {
     // Your Code Here :D
@@ -280,7 +285,7 @@ API.GetUserByID(134).then((data) => {
 ## Usage 
 ```javascript
 const ANIAPI = require("@mattplays/aniapi");
-const API = new ANIAPI.API();
+const API = new ANIAPI.API("DUMMY_JWT");
 
 API.GetUsers({
     username: "SomebodyRandom",

@@ -3,8 +3,13 @@ const {AnimeResponse, EpisodeResponse, UserResponse, SongResponse, ResourceRespo
 const {AnimeFilters, EpisodeFilters, SongFilters, UserFilters} = require("./Filters");
 const Enums = require("./Enums");
 class API {
-    constructor() {
-        this.baseURL = "https://api.aniapi.com/v1"
+    /**
+     * 
+     * @param {string=} jwt 
+     */
+    constructor(jwt) {
+        this.baseURL = "https://api.aniapi.com/v1",
+        this.jwt = jwt;
     }
     /**
      * 
@@ -13,12 +18,14 @@ class API {
      */
     GetAnimeByID(id) {
         const url = `${this.baseURL}/anime/${id}`;
-        return fetch(url, {
+        let options = {
             "headers": {
                 "Accept": "application/json"
             },
             "method": "GET"
-        }).then((r) => r.json()).then((res) => {
+        }
+        if(this.jwt) options.headers["Authorization"] = this.jwt
+        return fetch(url, options).then((r) => r.json()).then((res) => {
             if(res.status_code == 200) {
                 return new AnimeResponse(res)
             } else {
@@ -45,12 +52,14 @@ class API {
         if(filters.season && Object.keys(filters).indexOf("season") > 0) {url += `&season=${filters.season}`} else if(filters.season) {url += `?season=${filters.season}`};
         if(filters.genres && Object.keys(filters).indexOf("genres") > 0) {url += `&genres=${filters.genres.join()}`} else if(filters.genres) {url += `?genres=${filters.genres.join()}`};
         url += `&page=${page}&per_page=${per_page}`;
-        return fetch(url, {
+        let options = {
             "headers": {
                 "Accept": "application/json"
             },
             "method": "GET"
-        }).then((r) => r.json()).then((res) => {
+        }
+        if(this.jwt) options.headers["Authorization"] = this.jwt
+        return fetch(url, options).then((r) => r.json()).then((res) => {
             if(res.status_code == 200) {
                 return new AnimeResponse(res)
             } else {
@@ -65,12 +74,14 @@ class API {
      */
     GetEpisodeByID(id) {
         const url = `${this.baseURL}/episode/${id}`
-        return fetch(url, {
+        let options = {
             "headers": {
                 "Accept": "application/json"
             },
             "method": "GET"
-        }).then((r) => r.json()).then((res) => {
+        }
+        if(this.jwt) options.headers["Authorization"] = this.jwt
+        return fetch(url, options).then((r) => r.json()).then((res) => {
             if(res.status_code == 200) {
                 return new EpisodeResponse(res)
             } else {
@@ -112,12 +123,14 @@ class API {
      */
     GetSongByID(id) {
         const url = `${this.baseURL}/song/${id}`;
-        return fetch(url, {
+        let options = {
             "headers": {
                 "Accept": "application/json"
             },
             "method": "GET"
-        }).then((r) => r.json()).then((res) => {
+        }
+        if(this.jwt) options.headers["Authorization"] = this.jwt
+        return fetch(url, options).then((r) => r.json()).then((res) => {
             if(res.status_code == 200) {
                 return new SongResponse(res)
             } else {
@@ -141,12 +154,14 @@ class API {
         if(filters.season && Object.keys(filters).indexOf("season") > 0) {url += `&season=${filters.season}`} else if(filters.season) {url += `?sesaon=${filters.season}`};
         if(filters.type && Object.keys(filters).indexOf("type") > 0) {url += `&type=${filters.type}`} else if(filters.type) {url += `?type=${filters.type}`};
         url += `&page=${page}&per_page=${per_page}`;
-        return fetch(url, {
+        let options = {
             "headers": {
                 "Accept": "application/json"
             },
             "method": "GET"
-        }).then((r) => r.json()).then((res) => {
+        }
+        if(this.jwt) options.headers["Authorization"] = this.jwt
+        return fetch(url, options).then((r) => r.json()).then((res) => {
             if(res.status_code == 200) {
                 return new SongResponse(res)
             } else {
