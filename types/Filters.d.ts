@@ -1,4 +1,4 @@
-import {AnimeFormat, AnimeStatus, AnimeSongType, AnimeSeasonPeriod} from './Enums';
+import {AnimeFormat, AnimeStatus, AnimeSongType, AnimeSeasonPeriod, UserGender, UserStoryStatus} from './Enums';
 export type AnimeFilters = {
     title?: string,
     anilist_id?: number,
@@ -22,4 +22,29 @@ export type SongFilters = {
     year?: number,
     season?: AnimeSeasonPeriod[],
     type?: AnimeSongType[]
+}
+export type UserFilters = {
+    username?: string,
+    email?: string
+}
+export type UserChanges = {
+    id: number,
+    password: string,
+    gender: UserGender,
+    localization: string,
+    anilist_id: number,
+    anilist_token: string
+}
+export type UserStoryFilters = {
+    anime_id: number,
+    user_id: number,
+    status: UserStoryStatus,
+    synced: boolean
+}
+export type UserStoryChanges = {
+    user_id: number,
+    anime_id: number,
+    status: UserStoryStatus,
+    current_episode: number,
+    current_episode_ticks: number
 }

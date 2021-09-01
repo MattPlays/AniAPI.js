@@ -11,10 +11,9 @@ class Response {
         this.version = version;
     }
 }
-class ErrorResponse extends Response {
+class ErrorResponse {
     constructor(response) {
-        super(response.status_code, response.message, response.version);
-        this.data = response.data;
+        this.response = response;
     }
 }
 class AnimeResponse extends Response {
@@ -88,6 +87,35 @@ class UserResponse extends Response {
         }
     }
 }
+class UserChangedResponse extends Response {
+    constructor(response) {
+        super(response.status_code, response.message, response.version);
+        this.data = {
+            username: response.data.username,
+            role: response.data.role,
+            gender: response.data.gender,
+            localization: response.data.localization,
+            has_anilist: response.data.has_anilist,
+            has_mal: response.data.has_mal,
+            id: response.data.id
+        }
+    }
+}
+class UserStoryResponse extends Response {
+    constructor(response) {
+        super(response.status_code, response.message, response.version);
+        if(response.data.documents) {
+            this.data = {
+                current_page: response.data.current_page,
+                count: response.data.count,
+                documents: response.data.documents.map((d) => {return new UserStory(d.id, d.user_id, d.anime_id, d.status, d.current_episode, d.current_episode_ticks)}),
+                last_page: response.data.last_page
+            }
+        } else {
+            this.data = new UserStory(response.data.id, response.data.user_id, response.data.anime_id, response.data.status, response.data.current_episode, response.data.current_episode_ticks)
+        }
+    }
+}
 module.exports = {
     ErrorResponse: ErrorResponse,
     AnimeResponse: AnimeResponse,
@@ -95,4 +123,6 @@ module.exports = {
     SongResponse: SongResponse,
     UserResponse: UserResponse,
     ResourceResponse: ResourceResponse,
+    UserChangedResponse: UserChangedResponse,
+    UserStoryResponse: UserStoryResponse
 }

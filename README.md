@@ -17,24 +17,32 @@ const ANIAPI = require("@mattplays/aniapi");
 const API = new ANIAPI.API("DUMMY_JWT"); 
 ```
 
-For more info on the provided functions with the exception of [User](https://aniapi.com/docs/resources/user) and [UserStory](https://aniapi.com/docs/resources/user_story): 
+For more info on the provided functions: 
 
 1. [Anime](https://aniapi.com/docs/resources/anime)
-    1. [GetAnimeByID](#getanimebyid)
-    2. [GetAnimes](#getanimes)
+    1. [GetByID](#getanimebyid)
+    2. [Get](#getanimes)
 2. [Episode](https://aniapi.com/docs/resources/episode)
-    1. [GetEpisodeByID](#getepisodebyid)
-    2. [GetEpisodes](#getepisodes)
+    1. [GetByID](#getepisodebyid)
+    2. [Get](#getepisodes)
 3. [Song](https://aniapi.com/docs/resources/song)
-    1. [GetSongByID](#getsongbyid)
-    2. [GetSongs](#getsongs)
+    1. [GetByID](#getsongbyid)
+    2. [Get](#getsongs)
 4. [Resource](https://aniapi.com/docs/resources/resource)
     1. [GetLastAvailableResourceVersion](#lastavailable)
-    2. [GetResource](#getresource)
+    2. [Get](#getresource)
 5. [User](https://aniapi.com/docs/resources/user)
-    1. [GetUserByID](#getuserbyid)
-    2. [GetUsers](#getusers)
-6. [Enums](#enums)
+    1. [GetByID](#getuserbyid)
+    2. [Get](#getusers)
+    3. [Update](#updateuser)
+    4. [Delete](#deleteuser)
+6. [UserStory](https://aniapi.com/docs/resources/user_story)
+    1. [GetByID](#getuser_storybyid)
+    2. [Get](#getuser_storys)
+    3. [Create](#createuser_story)
+    4. [Update](#updateuser_story)
+    5. [Delete](#deleteuser_story)
+7. [Enums](#enums)
     1. [AnimeFormat](#enums-formats)
     2. [AnimeStatus](#enums-status)
     3. [AnimeSeasonPeriod](#enums-season)
@@ -42,12 +50,13 @@ For more info on the provided functions with the exception of [User](https://ani
     5. [AnimeResourceType](#enums-resource)
     6. [UserRole](#enums-userrole)
     7. [UserGender](#enums-usergender)
+    8. [UserStoryStatus](#enums-userstorystatus)
 
 All Responses from this Wrapper should be in accordance with the [docs](https://aniapi.com/docs/)
 
 ⚠ If not, Please Inform ⚠
 
-# GetAnimeByID <a id="getanimebyid">
+# Anime.GetByID <a id="getanimebyid">
 
 ## Parameters
 | Parameter | Type | Description |
@@ -59,7 +68,7 @@ All Responses from this Wrapper should be in accordance with the [docs](https://
 const ANIAPI = require("@mattplays/aniapi");
 const API = new ANIAPI.API("DUMMY_JWT");
 
-API.GetAnimeByID(11).then((data) => {
+API.Anime.GetByID(11).then((data) => {
     // Your Code HERE :D
 }).catch((err) => {
     // Handle err here D:
@@ -67,7 +76,7 @@ API.GetAnimeByID(11).then((data) => {
 
 ```
 
-# GetAnimes <a id="getanimes">
+# Anime.Get <a id="getanimes">
 
 ## Parameters
 | Parameter | Type | Description |
@@ -93,7 +102,7 @@ API.GetAnimeByID(11).then((data) => {
 const ANIAPI = require("@mattplays/aniapi");
 const API = new ANIAPI.API("DUMMY_JWT");
 
-API.GetAnimes({
+API.Anime.Get({
     genres: [
       "Action",
       "Adventure",
@@ -108,7 +117,7 @@ API.GetAnimes({
 });
 ```
 
-# GetEpisodeByID <a id="getepisodebyid">
+# Episode.GetByID <a id="getepisodebyid">
 
 ## Parameters
 | Parameter | Type | Description |
@@ -120,14 +129,14 @@ API.GetAnimes({
 const ANIAPI = require("@mattplays/aniapi");
 const API = new ANIAPI.API("DUMMY_JWT");
 
-API.GetEpisodeByID(485).then((data) => {
+API.Episode.GetByID(485).then((data) => {
     // Your Code Here :D
 }).catch((err) => {
     // Handle error Here D:
 })
 ```
 
-# GetEpisodes <a id="getepisodes">
+# Episode.Get <a id="getepisodes">
 
 ## Parameters
 | Parameter | Type | Description |
@@ -149,7 +158,7 @@ API.GetEpisodeByID(485).then((data) => {
 const ANIAPI = require("@mattplays/aniapi");
 const API = new ANIAPI.API("DUMMY_JWT");
 
-API.GetEpisodes({
+API.Episode.Get({
     anime_id: 11,
     source: "dreamsub",
     locale: "it",
@@ -160,7 +169,7 @@ API.GetEpisodes({
 });
 ```
 
-# GetSongByID <a id="getsongbyid">
+# Song.GetByID <a id="getsongbyid">
 
 ## Parameters
 | Parameter | Type | Description |
@@ -172,14 +181,14 @@ API.GetEpisodes({
 const ANIAPI = require("@mattplays/aniapi");
 const API = new ANIAPI.API("DUMMY_JWT");
 
-API.GetSongByID(11).then((data) => {
+API.Song.GetByID(11).then((data) => {
     // Your Code Here :D
 }).catch((err) => {
     // Handle error Here D:
 });
 ```
 
-# GetSongs <a id="getsongs">
+# Song.Get <a id="getsongs">
 
 ## Parameters
 | Parameter | Type | Description |
@@ -203,7 +212,7 @@ API.GetSongByID(11).then((data) => {
 const ANIAPI = require("@mattplays/aniapi");
 const API = new ANIAPI.API("DUMMY_JWT");
 
-API.GetSongs({
+API.Song.Get({
     anime_id: 4,
     season: [ANIAPI.ENUMS.AnimeSeasonPeriod.WINTER, ANIAPI.ENUMS.AnimeSeasonPeriod.SPRING], // 0 Is for Winter, 1 is for Spring
     type: [ANIAPI.ENUMS.AnimeSongType.OPENING, ANIAPI.ENUMS.AnimeSongType.ENDING] // 0 is for Opening, 1 is for Ending
@@ -214,21 +223,21 @@ API.GetSongs({
 });
 ```
 
-# GetLastAvailableResourceVersion <a id="lastavailable">
+# Resource.GetLastAvailableResourceVersion <a id="lastavailable">
 
 ## Usage
 ```javascript
 const ANIAPI = require("@mattplays/aniapi");
 const API = new ANIAPI.API("DUMMY_JWT");
 
-API.GetLastAvailableResourceVersion().then((data) => {
+API.Resource.GetLastAvailableResourceVersion().then((data) => {
     // Your Code Here :D
 }).catch((err) => {
     // Handle error Here D:
 });
 ```
 
-# GetResource <a id="getresource">
+# Resource.Get <a id="getresource">
 
 ## Parameters
 | Parameter | Type | Description |
@@ -241,14 +250,14 @@ API.GetLastAvailableResourceVersion().then((data) => {
 const ANIAPI = require("@mattplays/aniapi");
 const API = new ANIAPI.API("DUMMY_JWT");
 
-API.GetResource("1.0", ANIAPI.ENUMS.AnimeResourceType.GENRES).then((data) => {
+API.Resource.Get("1.0", ANIAPI.ENUMS.AnimeResourceType.GENRES).then((data) => {
     // Your Code Here :D
 }).catch((err) => {
     // Handle error Here D:
 });
 ```
 
-# GetUserByID <a id="getuserbyid">
+# User.GetByID <a id="getuserbyid">
 
 ## Parameters
 | Parameter | Type | Description |
@@ -260,14 +269,14 @@ API.GetResource("1.0", ANIAPI.ENUMS.AnimeResourceType.GENRES).then((data) => {
 const ANIAPI = require("@mattplays/aniapi");
 const API = new ANIAPI.API("DUMMY_JWT");
 
-API.GetUserByID(134).then((data) => {
+API.User.GetByID(134).then((data) => {
     // Your Code Here :D
 }).catch((err) => {
     // Handle error Here D:
 })
 ```
 
-# GetUsers <a id="getusers">
+# User.Get <a id="getusers">
 
 ## Parameters
 | Parameter | Type | Description |
@@ -287,10 +296,176 @@ API.GetUserByID(134).then((data) => {
 const ANIAPI = require("@mattplays/aniapi");
 const API = new ANIAPI.API("DUMMY_JWT");
 
-API.GetUsers({
+API.User.Get({
     username: "SomebodyRandom",
     email: "real@email.com"
 }, 1, 100).then((data) => {
+    // Your Code Here :D
+}).catch((err) => {
+    // Handle error Here D:
+})
+```
+
+# User.Update <a id="updateuser">
+## Parameters
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| id | `string` | The User's id to update |
+| changes | `UserChanges` | The changes you want to apply. [More Info](https://aniapi.com/docs/resources/user#parameters-2) |
+
+### Currently the following changes and their types are:
+| Change | Type | Description |
+| ------ | ---- | ----------- |
+| password | `string` | The User's new password value. |
+| gender | `UserGender` | The User's gender value. |
+| localization | `string` | The User's new localization value. |
+| anilist_id | `number` | The User's [AniList](https://anilist.co/) account external id.
+| anilist_token| `string` | The User's [AniList](https://anilist.co/) account external token. This value becomes `required` when you provide the `anilist_id` field.
+
+## Usage
+```javascript
+const ANIAPI = require("@mattplays/aniapi");
+const API = new ANIAPI.API("DUMMY_JWT");
+
+API.User.Update(134, {
+    gender: aniapi.ENUMS.UserGender.MALE
+}).then((data) => {
+    // Your Code Here :D
+}).catch((err) => {
+    // Handle error Here D:
+})
+```
+
+# User.Delete <a id="deleteuser">
+
+## Parameters
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| id | `string` | The User's id to delete |
+
+## Usage
+```javascript
+const ANIAPI = require("@mattplays/aniapi");
+const API = new ANIAPI.API("DUMMY_JWT");
+
+API.User.Delete(134).then((data) => {
+    // Your Code Here :D
+}).catch((err) => {
+    // Handle error Here D:
+})
+```
+
+# UserStory.GetByID <a id="getuser_storybyid">
+
+## Parameters
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| id | `string` | The User_Story's id to fetch |
+
+## Usage
+```javascript
+const ANIAPI = require("@mattplays/aniapi");
+const API = new ANIAPI.API("DUMMY_JWT");
+
+API.UserStory.GetByID(1).then((data) => {
+    // Your Code Here :D
+}).catch((err) => {
+    // Handle error Here D:
+})
+```
+
+# UserStory.Get <a id="getuser_storys">
+
+## Parameters
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| filters | `UserStoryFilters` | Filters you want to apply [At least 1] - [more info](https://aniapi.com/docs/resources/user_story#parameters-1)
+| page | `number` | The page number of the paginated results |
+| per_page | `number` | Number of results you want per page |
+
+### Currently the following filters and their types are: 
+| Filter | Type | Description |
+| ------ | ---- | ----------- |
+| anime_id | `number` | A filter on the list based on the `anime_id` field value. |
+| user_id | `number` | A filter on the list based on the `user_id` field value. | 
+| status | `UserStoryStatus` | A filter on the list based on the `status` field value.
+| synced | `boolean` | A filter on the list based on the `synced` field value. `synced` field indicates if an UserStory has been synchronized with User's linked trackers. |
+
+## Usage
+```javascript
+const ANIAPI = require("@mattplays/aniapi");
+const API = new ANIAPI.API("DUMMY_JWT");
+
+API.UserStory.Get({
+    status: aniapi.ENUMS.UserStoryStatus.COMPLETED,
+    synced: true
+}).then((data) => {
+    // Your Code Here :D
+}).catch((err) => {
+    // Handle error Here D:
+})
+```
+
+# UserStory.Create <a id="createuser_story">
+
+## Parameters
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| input | `UserStoryChanges` | The User_Story's object to create |
+
+## Usage
+```javascript
+const ANIAPI = require("@mattplays/aniapi");
+const API = new ANIAPI.API("DUMMY_JWT");
+
+API.UserStory.Create({
+    user_id: 134,
+    anime_id: 11,
+    status: aniapi.ENUMS.UserStoryStatus.COMPLETED,
+    current_episode: 24,
+}).then((data) => {
+    // Your Code Here :D
+}).catch((err) => {
+    // Handle error Here D:
+})
+```
+# UserStory.Update <a id="updateuser_story">
+
+## Parameters
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| changes | `UserStoryChanges` | The User_Story's object to update |
+
+## Usage
+```javascript
+const ANIAPI = require("@mattplays/aniapi");
+const API = new ANIAPI.API("DUMMY_JWT");
+
+API.UserStory.Update({
+    id: 1,
+    anime_id: 11,
+    status: aniapi.ENUMS.UserStoryStatus.COMPLETED,
+    current_episode: 24,
+}).then((data) => {
+    // Your Code Here :D
+}).catch((err) => {
+    // Handle error Here D:
+})
+```
+
+# UserStory.Delete <a id="deleteuser_story">
+
+## Parameters
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| id | `string` | The User_Story's id to delete |
+
+## Usage
+```javascript
+const ANIAPI = require("@mattplays/aniapi");
+const API = new ANIAPI.API("DUMMY_JWT");
+
+API.UserStory.Delete(1).then((data) => {
     // Your Code Here :D
 }).catch((err) => {
     // Handle error Here D:
@@ -366,6 +541,15 @@ Possible enum values
 "FEMALE": 2,
 ```
 
+## UserStoryStatus <a id="enums-userstorystatus">
+```javascript
+"CURRENT": 0,
+"PLANNING": 1,
+"COMPLETED": 2,
+"DROPPED": 3,
+"PAUSED": 4,
+"REPEATING": 5
+```
 
 # License
 MIT License - Copyright (c) 2021 MattPlays [License](https://github.com/MattPlays/AniAPI-Wrapper/blob/main/LICENSE)
