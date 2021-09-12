@@ -1,7 +1,0 @@
-{
-    "compilerOptions": {
-        "allowJs": true,
-        "allowSyntheticDefaultImports": true,
-        "skipLibCheck": true
-    }
-}

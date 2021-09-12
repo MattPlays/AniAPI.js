@@ -3,7 +3,7 @@ import {AnimeFilters, EpisodeFilters, UserFilters, SongFilters, UserChanges, Use
 import { AnimeResponse, EpisodeResponse, UserChangedResponse, UserResponse, SongResponse, ResourceResponse, ErrorResponse, UserStoryResponse } from './Responses';
 import ENUMS from "./Enums";
 export class API {
-    constructor(_jwt?: string);
+    constructor(jwt: string);
     Anime = {
         GetByID: (_id: string | number): Promise<AnimeResponse | ErrorResponse> => {},
         Get: (_filters: AnimeFilters, _page: number, _per_page: number): Promise<AnimeResponse | ErrorResponse> => {}
