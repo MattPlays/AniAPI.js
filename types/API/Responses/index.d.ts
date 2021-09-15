@@ -1,10 +1,10 @@
-import { Anime } from "./Anime";
-import { Episode } from "./Episode";
-import { Song } from "./Song";
-import { Resource } from "./Resource";
-import { User } from "./User";
-import { UserStory } from "./UserStory";
-import { UserRole, UserGender } from "./Enums";
+import { Anime } from "../lib/Anime";
+import { Episode } from "../lib/Episode";
+import { Song } from "../lib/Song";
+import { Resource } from "../lib/Resource";
+import { User } from "../lib/User";
+import { UserStory } from "../lib/UserStory";
+import { UserRole, UserGender } from "../lib/Enums";
 export type AnimeResponse = {
     status_code: number,
     message: string,

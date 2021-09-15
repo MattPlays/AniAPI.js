@@ -1,9 +1,9 @@
-const Anime = require("./Anime");
-const Episode = require("./Episode");
-const Resource = require("./Resource");
-const Song = require("./Song");
-const User = require("./User");
-const UserStory = require("./UserStory");
+const Anime = require("../lib/Anime");
+const Episode = require("../lib/Episode");
+const Resource = require("../lib/Resource");
+const Song = require("../lib/Song");
+const User = require("../lib/User");
+const UserStory = require("../lib/UserStory");
 class Response {
     constructor(status_code, message, version) {
         this.status_code = status_code;

@@ -8,8 +8,6 @@ npm i @mattplays/aniapi
 
 # Usage
 
-Creating a new instance of the API with a JWT is completely **optional**. You might run into some unauthorizated responses though.
-
 To get your JWT login to ANIAPI [here](https://aniapi.com/login)
 
 ```javascript
