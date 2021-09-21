@@ -5,10 +5,12 @@ import { Resource } from "../lib/Resource";
 import { User } from "../lib/User";
 import { UserStory } from "../lib/UserStory";
 import { UserRole, UserGender } from "../lib/Enums";
-export type AnimeResponse = {
+interface Response {
     status_code: number,
     message: string,
-    version: string 
+    version: string
+}
+export interface AnimeResponse extends Response {
     data: Anime | {
         current_page: number,
         count: number,
@@ -17,10 +19,7 @@ export type AnimeResponse = {
     },
 }
 
-export type EpisodeResponse = {
-    status_code: number,
-    message: string,
-    version: string,
+export interface EpisodeResponse extends Response {
     data: Episode | {
         current_page: number,
         count: number,
@@ -29,10 +28,7 @@ export type EpisodeResponse = {
     },
 }
 
-export type SongResponse = {
-    status_code: number,
-    message: string,
-    version: string,
+export interface SongResponse extends Response {
     data: Song | {
         current_page: number,
         count: number,
@@ -40,10 +36,7 @@ export type SongResponse = {
         last_page: number
     },
 }
-export type UserResponse = {
-    status_code: number,
-    message: string,
-    version: string,
+export interface UserResponse extends Response {
     data: User | {
         current_page: number,
         count: number,
@@ -51,10 +44,7 @@ export type UserResponse = {
         last_page: number
     }
 }
-export type UserChangedResponse = {
-    status_code: number,
-    message: string,
-    version: string,
+export interface UserChangedResponse extends Response {
     data: {
         username: string,
         role: UserRole,
@@ -65,10 +55,7 @@ export type UserChangedResponse = {
         id: number
     },
 }
-export type UserStoryResponse = {
-    status_code: number,
-    message: string,
-    version: string,
+export interface UserStoryResponse extends Response {
     data: UserStory | {
         current_page: number,
         count: number,
@@ -76,15 +63,9 @@ export type UserStoryResponse = {
         last_page: number
     }
 }
-export type ResourceResponse = {
-    status_code: number,
-    message: string,
-    version: string,
+export interface ResourceResponse extends Response {
     data: Resource,
 }
-export type ErrorResponse = {
-    status_code: number,
-    message: string,
-    version: string,
+export interface ErrorResponse extends Resource {
     data: string,
 }
