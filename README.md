@@ -86,14 +86,15 @@ API.Anime.GetByID(11).then((data) => {
 ### Currently the following filters and their types are:
 | Filter | Type | Description |
 | ----- | ---- | ------------ |
-| title | `string` | A case-insensitive pattern filter on the list based on the `titles` field values.
-| anilist_id | `number` | A filter on the list based on the `anilist_id` field value.
-| mal_id | `number` | A filter on the list based on the `mal_id` field value.
-| [formats](#enums-formats) | `AnimeFormat[]` | A filter on the list based on the `format` field value.
-| [status](#enums-status) | `AnimeStatus[]` | A filter on the list based on the `status` field value.
-| year | `number` | A filter on the list based on the `season_year` field value.
-| season | `number` | A filter on the list based on the `season_period` field value.
-| genres | `string[]` | A case-sensitive pattern filter on the list based on the `genres` field values.
+| title | `string` | A case-insensitive pattern filter on the list based on the `titles` field values. |
+| anilist_id | `number` | A filter on the list based on the `anilist_id` field value. | 
+| mal_id | `number` | A filter on the list based on the `mal_id` field value. | 
+| [formats](#enums-formats) | `AnimeFormat[]` | A filter on the list based on the `format` field value. | 
+| [status](#enums-status) | `AnimeStatus[]` | A filter on the list based on the `status` field value. | 
+| year | `number` | A filter on the list based on the `season_year` field value. |
+| season | `number` | A filter on the list based on the `season_period` field value. |
+| genres | `string[]` | A case-sensitive pattern filter on the list based on the `genres` field values. |
+| nsfw | `boolean` | A filter on the list which excludes Anime **classified as Not Safe For Work**. |
 
 ## Usage
 ```javascript
