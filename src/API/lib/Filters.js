@@ -41,12 +41,12 @@ var EpisodeFilters = {
 /**
  * @typedef SongFilters
  * @type {object}
- * @property {?number} anime_id
- * @property {?string} title
- * @property {?string} artist
- * @property {?number} year
- * @property {?AnimeSeasonPeriod[]} season
- * @property {?AnimeSongType[]} type
+ * @property {number} [anime_id]
+ * @property {string} [title]
+ * @property {string} [artist]
+ * @property {number} [year]
+ * @property {AnimeSeasonPeriod[]} [season]
+ * @property {AnimeSongType[]} [type]
  */
 var SongFilters = {
     anime_id: null,
@@ -59,8 +59,8 @@ var SongFilters = {
 /**
  * @typedef UserFilters
  * @type {object}
- * @property {?string} username
- * @property {?string} email
+ * @property {string} [username]
+ * @property {string} [email]
  */
 var UserFilters = {
     username: null,
@@ -70,11 +70,11 @@ var UserFilters = {
  * @typedef UserChanges
  * @type {object}
  * @property {number} id - The User's id to update
- * @property {?string} password - The User's new password value.
+ * @property {string} password - The User's new password value.
  * @property {UserGender} gender - The User's gender value.
- * @property {?string} localization - The User's new localization value.
- * @property {?number} anilist_id - The User's [AniList](https://anilist.co/) account external id.
- * @property {?string} anilist_token - The User's [AniList](https://anilist.co/) account external token. This value becomes `required` when you provide the `anilist_id` field.
+ * @property {string} localization - The User's new localization value.
+ * @property {number} anilist_id - The User's [AniList](https://anilist.co/) account external id.
+ * @property {string} anilist_token - The User's [AniList](https://anilist.co/) account external token. This value becomes `required` when you provide the `anilist_id` field.
  */
 var UserChanges = {
     id: null,
