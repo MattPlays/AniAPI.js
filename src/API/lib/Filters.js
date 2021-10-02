@@ -3,14 +3,15 @@ const {UserGender} = require('./Enums');
 /**
  * @typedef AnimeFilters
  * @type {object}
- * @property {?string} title
- * @property {?number} anilist_id
- * @property {?number} mal_id
- * @property {?AnimeFormat[]} formats
- * @property {?AnimeStatus[]} status
- * @property {?number} year
- * @property {?number} season
- * @property {?string[]} genres
+ * @property {string} [title]
+ * @property {number} [anilist_id]
+ * @property {number} [mal_id]
+ * @property {AnimeFormat[]} [formats]
+ * @property {AnimeStatus[]} [status]
+ * @property {number} [year]
+ * @property {number} [season]
+ * @property {string[]} [genres]
+ * @property {boolean} [nsfw]
  */
 var AnimeFilters = {
     title: null,
@@ -20,15 +21,16 @@ var AnimeFilters = {
     status: null,
     year: null,
     season: null,
-    genres: null
+    genres: null,
+    nsfw: null
 }
 /**
  * @typedef EpisodeFilters
  * @type {object}
- * @property {?number} anime_id
- * @property {?number} number
- * @property {?string} source
- * @property {?string} locale
+ * @property {number} [anime_id]
+ * @property {number} [number]
+ * @property {string} [source]
+ * @property {string} [locale]
  */
 var EpisodeFilters = {
     anime_id: null,

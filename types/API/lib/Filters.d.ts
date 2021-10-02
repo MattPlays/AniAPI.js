@@ -7,7 +7,8 @@ export type AnimeFilters = {
     status?: AnimeStatus[],
     year?: number,
     season?: number,
-    genres?: string[]
+    genres?: string[],
+    nsfw?: boolean
 }
 export type EpisodeFilters = {
     anime_id?: number,

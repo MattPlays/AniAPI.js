@@ -66,6 +66,6 @@ export interface UserStoryResponse extends Response {
 export interface ResourceResponse extends Response {
     data: Resource,
 }
-export interface ErrorResponse extends Resource {
+export interface ErrorResponse extends Response {
     data: string,
 }
