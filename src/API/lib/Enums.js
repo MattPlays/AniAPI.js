@@ -42,7 +42,8 @@ var AnimeSongType = {
  */
 var AnimeResourceType = {
     "GENRES": 0,
-    "LOCALIZATIONS": 1
+    "LOCALIZATIONS": 1,
+    "SOURCES": 2
 };
 /**
  * @readonly

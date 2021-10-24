@@ -28,6 +28,7 @@ export enum AnimeSongType {
 export enum AnimeResourceType {
     "GENRES" = 0,
     "LOCALIZATIONS" = 1,
+    "SOURCES" = 2
 }
 export enum UserRole {
     "BASIC" = 0,
