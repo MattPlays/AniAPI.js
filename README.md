@@ -20,12 +20,14 @@ For more info on the provided functions:
 1. [Anime](https://aniapi.com/docs/resources/anime)
     1. [GetByID](#getanimebyid)
     2. [Get](#getanimes)
+    3. [Random](#randomanime)
 2. [Episode](https://aniapi.com/docs/resources/episode)
     1. [GetByID](#getepisodebyid)
     2. [Get](#getepisodes)
 3. [Song](https://aniapi.com/docs/resources/song)
     1. [GetByID](#getsongbyid)
     2. [Get](#getsongs)
+    3. [Random](#randomsong)
 4. [Resource](https://aniapi.com/docs/resources/resource)
     1. [GetLastAvailableResourceVersion](#lastavailable)
     2. [Get](#getresource)
@@ -110,6 +112,24 @@ API.Anime.Get({
     formats: [ANIAPI.ENUMS.AnimeFormat.TV, ANIAPI.ENUMS.AnimeFormat.MOVIE], // 0 is for TV, 2 is for Movie,
     status: [ANIAPI.ENUMS.AnimeStatus.FINISHED, ANIAPI.ENUMS.AnimeStatus.RELEASING] // 0 is for Finished, 1 is for Releasing
 }, 1, 100).then((data) => {
+    // Your Code Here :D
+}).catch((err) => {
+    // Handle error Here D:
+});
+```
+
+# Anime.Random <a id="randomanime">
+## Parameters
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| count | `number` | N/A |
+
+## Usage
+```javascript
+const ANIAPI = require("@mattplays/aniapi");
+const API = new ANIAPI.API("DUMMY_JWT");
+
+API.Anime.Random(10).then((data) => {
     // Your Code Here :D
 }).catch((err) => {
     // Handle error Here D:
@@ -221,7 +241,23 @@ API.Song.Get({
     // Handle error Here D:
 });
 ```
+# Song.Random <a id="randomsong">
+## Parameters
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| count | `number` | N/A |
 
+## Usage
+```javascript
+const ANIAPI = require("@mattplays/aniapi");
+const API = new ANIAPI.API("DUMMY_JWT");
+
+API.Song.Random(10).then((data) => {
+    // Your Code Here :D
+}).catch((err) => {
+    // Handle error Here D:
+});
+```
 # Resource.GetLastAvailableResourceVersion <a id="lastavailable">
 
 ## Usage
