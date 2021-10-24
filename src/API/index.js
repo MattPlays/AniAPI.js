@@ -1,4 +1,4 @@
-const axios = require('axios').default;
+const {create} = require('axios').default;
 const {AnimeResponse, EpisodeResponse, UserResponse, SongResponse, ResourceResponse, ErrorResponse, UserChangedResponse, UserStoryResponse} = require("./Responses/index");
 const {AnimeFilters, EpisodeFilters, SongFilters, UserFilters, UserChanges, UserStoryFilters, UserStoryChanges} = require("./lib/Filters");
 const Enums = require("./lib/Enums");
@@ -7,7 +7,7 @@ class API {
      * @param {string} jwt - To get your JWT login to ANIAPI [here](https://aniapi.com/login)
      */
     constructor(jwt) {
-        this.api = axios.create({
+        this.api = create({
             baseURL: "https://api.aniapi.com/v1",
             headers: {
                 "Accept": "application/json",
@@ -47,6 +47,20 @@ class API {
            }).then(({data}) => {
                return (data.status_code == 200) ? new AnimeResponse(data) : new ErrorResponse(data);
            }).catch((err) => {throw new Error(err)});
+        },
+        /**
+         * Retrieves a random Anime show list.
+         * @param {number} [count]
+         * @returns {Promise<{status_code: number, message: string, data: Anime[], version: string} | ErrorResponse>}
+         */
+        Random: async(count) => {
+            if(!count) count = 1;
+            return this.api({
+                method: "GET",
+                url: `/random/anime/${count}`
+            }).then(({data}) => {
+                return (data.status_code == 200) ? data : new ErrorResponse(data);
+            }).catch((err) => {throw new Error(err)});
         }
     }
     Episode = {
@@ -113,6 +127,20 @@ class API {
             }).then(({data}) => {
                 return (data.status_code == 200) ? new SongResponse(data) : new ErrorResponse(data);
             }).catch((err) => {throw new Error(err)});
+        },
+        /**
+         * Returns a random Song list.
+         * @param {number} [count] 
+         * @returns {Promise<{status_code: number, message: string, data: Anime[], version: string} | ErrorResponse>}
+         */
+        Random: async(count) => {
+            if(!count) count = 1;
+            return this.api({
+                method: "GET",
+                url: `/random/song/${count}`
+            }).then(({data}) => {
+                return (data.status_code == 200) ? data : new ErrorResponse(data);
+            }).catch((err) => {throw new Error(err)})
         }
     }
     Resource = {

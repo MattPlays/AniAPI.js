@@ -5,7 +5,8 @@ export declare class API {
     constructor(jwt: string);
     declare Anime: {
         GetByID(_id: string | number): Promise<AnimeResponse | ErrorResponse>,
-        Get(_filters: AnimeFilters, _page: number, _per_page: number): Promise<AnimeResponse | ErrorResponse>
+        Get(_filters: AnimeFilters, _page: number, _per_page: number): Promise<AnimeResponse | ErrorResponse>,
+        Random(_count: number): Promise<AnimeResponse | ErrorResponse>
     };
     declare Episode: {
         GetByID(_id: string | number): Promise<EpisodeResponse | ErrorResponse>,
@@ -14,6 +15,7 @@ export declare class API {
     declare Song: {
         GetByID(_id: string | number): Promise<SongResponse | ErrorResponse>,
         Get(_filters: SongFilters, _page: number, _per_page:number): Promise<SongResponse | ErrorResponse>,
+        Random(_count: number): Promise<SongResponse | ErrorResponse>
     };
     declare Resource: {
         GetLastAvailableResourceVersion(): Promise<ResourceResponse | ErrorResponse>,
