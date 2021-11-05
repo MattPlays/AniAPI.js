@@ -163,7 +163,7 @@ class API {
          * @returns {Promise<ResourceResponse | ErrorResponse>}
          */
         Get: async(version = "1.0", type) => {
-            if(!type) throw new Error("You must provide a valid type");
+            if(!Objects.values(Enums.AnimeResourceType).includes(type)) throw new Error("You must provide a valid type");
             return this.api({
                 method: "GET",
                 url: `/resources/${version}/${type}`
