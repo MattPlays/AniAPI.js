@@ -1,4 +1,5 @@
 const {create} = require('axios').default;
+const pe = require("../../config");
 const {AnimeResponse, EpisodeResponse, UserResponse, SongResponse, ResourceResponse, ErrorResponse, UserChangedResponse, UserStoryResponse} = require("./Responses/index");
 const {AnimeFilters, EpisodeFilters, SongFilters, UserFilters, UserChanges, UserStoryFilters, UserStoryChanges} = require("./lib/Filters");
 const Enums = require("./lib/Enums");
@@ -27,7 +28,7 @@ class API {
                 url: `/anime/${id}`
             }).then(({data}) => {
                 return (data.status_code == 200) ? new AnimeResponse(data) : new ErrorResponse(data);
-            }).catch((err) => {throw new Error(err)});
+            }).catch((err) => {throw pe.render(err)});
         },
         /**
          * 
@@ -37,7 +38,7 @@ class API {
          * @returns {Promise<AnimeResponse | ErrorResponse>}
          */
         Get: async(filters = {}, page = 1, per_page = 100) => {
-            if(Object.keys(filters).length < 1) throw new Error("At least 1 filter must be provided");
+            if(Object.keys(filters).length < 1) return pe.render(new Error("At least 1 filter must be provided"));
             return this.api({
                method: "GET",
                url: `/anime${Object.keys(filters).map((d) => {
@@ -46,7 +47,7 @@ class API {
             }).join()}&page=${page}&per_page=${per_page}`
            }).then(({data}) => {
                return (data.status_code == 200) ? new AnimeResponse(data) : new ErrorResponse(data);
-           }).catch((err) => {throw new Error(err)});
+           }).catch((err) => {throw pe.render(err)});
         },
         /**
          * Retrieves a random Anime show list.
@@ -60,7 +61,7 @@ class API {
                 url: `/random/anime/${count}`
             }).then(({data}) => {
                 return (data.status_code == 200) ? data : new ErrorResponse(data);
-            }).catch((err) => {throw new Error(err)});
+            }).catch((err) => {throw pe.render(err)});
         }
     }
     Episode = {
@@ -75,7 +76,7 @@ class API {
                 url: `/episode/${id}`
             }).then(({data}) => {
                 return (data.status_code == 200) ? new EpisodeResponse(data) : new ErrorResponse(data);
-            }).catch((err) => {throw new Error(err)});
+            }).catch((err) => {throw pe.render(err)});
         },
         /**
          * 
@@ -93,7 +94,7 @@ class API {
                 }).join()}&page=${page}&per_page=${per_page}`
             }).then(({data}) => {
                 return (data.status_code == 200) ? new EpisodeResponse(data) : new ErrorResponse(data); 
-            }).catch((err) => {throw new Error(err)});
+            }).catch((err) => {throw pe.render(err)});
         }
     }
     Song = {
@@ -108,7 +109,7 @@ class API {
                 url: `/song/${id}`
             }).then(({data}) => {
                 return (data.status_code == 200) ? new SongResponse(data) : new ErrorResponse(data);
-            }).catch((err) => {throw new Error(err)});
+            }).catch((err) => {throw pe.render(err)});
         },
         /**
          * 
@@ -126,7 +127,7 @@ class API {
                 }).join()}&page=${page}&per_page=${per_page}`
             }).then(({data}) => {
                 return (data.status_code == 200) ? new SongResponse(data) : new ErrorResponse(data);
-            }).catch((err) => {throw new Error(err)});
+            }).catch((err) => {throw pe.render(err)});
         },
         /**
          * Returns a random Song list.
@@ -140,7 +141,7 @@ class API {
                 url: `/random/song/${count}`
             }).then(({data}) => {
                 return (data.status_code == 200) ? data : new ErrorResponse(data);
-            }).catch((err) => {throw new Error(err)})
+            }).catch((err) => {throw pe.render(err)})
         }
     }
     Resource = {
@@ -154,7 +155,7 @@ class API {
                 url: "/resources"
             }).then(({data}) => {
                 return (data.status_code == 200) ? new ResourceResponse(data) : new ErrorResponse(data);
-            }).catch((err) => {throw new Error(err)});
+            }).catch((err) => {throw pe.render(err)});
         },
         /**
          * 
@@ -163,13 +164,13 @@ class API {
          * @returns {Promise<ResourceResponse | ErrorResponse>}
          */
         Get: async(version = "1.0", type) => {
-            if(!Objects.values(Enums.AnimeResourceType).includes(type)) throw new Error("You must provide a valid type");
+            if(!Objects.values(Enums.AnimeResourceType).includes(type)) return pe.render(new Error("You must provide a valid type"));
             return this.api({
                 method: "GET",
                 url: `/resources/${version}/${type}`
             }).then(({data}) => {
                 return (data.status_code == 200) ? new ResourceResponse(data) : new ErrorResponse(data);
-            }).catch((err) => {throw new Error(err)});
+            }).catch((err) => {throw pe.render(err)});
         }
     }
     User = {
@@ -184,7 +185,7 @@ class API {
                 url: `/user/${id}`
             }).then(({data}) => {
                 return (data.status_code == 200) ? new UserResponse(data) : ErrorResponse(data);
-            }).catch((err) => {throw new Error(err)});
+            }).catch((err) => {throw pe.render(err)});
         },
         /**
          * 
@@ -202,7 +203,7 @@ class API {
                 }).join()}&page=${page}&per_page=${per_page}`
             }).then(({data}) => {
                 return (data.status_code == 200) ? new UserResponse(data) : new ErrorResponse(data);
-            }).catch((err) => {throw new Error(err)});
+            }).catch((err) => {throw pe.render(err)});
         },
         /**
          * 
@@ -211,9 +212,9 @@ class API {
          * @returns {Promise<UserChangedResponse | ErrorResponse>}
          */
         Update: async(id, changes = {}) => {
-            if(!id) throw new Error("You must provide a UserID");
-            if(Object.keys(changes) < 1) throw new Error("You must change at least 1 field");
-            if(changes.anilist_id && !changes.anilist_token) throw new Error("The anilist_token value becomes required when you provide the anilist_id field.");
+            if(!id) return pe.render(new Error("You must provide a UserID"));
+            if(Object.keys(changes) < 1) return pe.render(new Error("You must change at least 1 field"));
+            if(changes.anilist_id && !changes.anilist_token) return pe.render(new Error("The anilist_token value becomes required when you provide the anilist_id field."));
             return this.api({
                 method: "POST",
                 url: "/user",
@@ -226,7 +227,7 @@ class API {
                 })
             }).then(({data}) => {
                 return (data.status_code == 200) ? new UserChangedResponse(data) : new ErrorResponse(data);
-            }).catch((err) => {throw new Error(err)});
+            }).catch((err) => {throw pe.render(err)});
         },
         /**
          * 
@@ -234,13 +235,13 @@ class API {
          * @returns {Promise<{"status_code": number, "message": string, "data": string, "version": string}>}
          */
         Delete: async(id) => {
-            if(!id) throw new Error("You must provide a UserID");
+            if(!id) return pe.render(new Error("You must provide a UserID"));
             return this.api({
                 method: "DELETE",
                 url: `/user/${id}`
             }).then(({data}) => {
                 return (data.status_code == 200) ? data: new ErrorResponse(data);
-            }).catch((err) => {throw new Error(err)});
+            }).catch((err) => {throw pe.render(err)});
         }
     }
     UserStory = {
@@ -255,7 +256,7 @@ class API {
                 url: `/user_story/${id}`
             }).then(({data}) => {
                 return (data.status_code == 200) ? new UserStoryResponse(data) : new ErrorResponse(data); 
-            }).catch((err) => {throw new Error(err)});
+            }).catch((err) => {throw pe.render(err)});
         },
         /**
          * 
@@ -273,7 +274,7 @@ class API {
                 }).join()}&page=${page}&per_page=${per_page}`
             }).then(({data}) => {
                 return (data.status_code == 200) ? new UserStoryResponse(data) : new ErrorResponse(data);
-            }).catch((err) => {throw new Error(err)});
+            }).catch((err) => {throw pe.render(err)});
         },
         /**
         * 
@@ -292,7 +293,7 @@ class API {
                 })
             }).then(({data}) => {
                 return (data.status_code == 200) ? new UserStoryResponse(data) : new ErrorResponse(data);
-            }).catch((err) => {throw new Error(err)});
+            }).catch((err) => {throw pe.render(err)});
         },
         /**
          * @param {string | number} id
@@ -312,7 +313,7 @@ class API {
                 })
             }).then(({data}) => {
                 return (data.status_code == 200) ? new UserStoryResponse(data) : new ErrorResponse(data);
-            }).catch((err) => {throw new Error(err)});
+            }).catch((err) => {throw pe.render(err)});
         },
         /**
          * 
@@ -325,7 +326,7 @@ class API {
                 url: `/user_story/${id}`
             }).then(({data}) => {
                 return (data.status_code == 200) ? data : new ErrorResponse(data);
-            }).catch((err) => {throw new Error(err)});
+            }).catch((err) => {throw pe.render(err)});
         }
     }
 }
