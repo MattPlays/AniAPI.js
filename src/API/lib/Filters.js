@@ -1,5 +1,4 @@
-const {AnimeFormat, AnimeStatus, AnimeSeasonPeriod, AnimeSongType, UserStoryStatus} = require("./Enums");
-const {UserGender} = require('./Enums');
+const {AnimeFormat, AnimeStatus, AnimeSeasonPeriod, AnimeSongType, UserStoryStatus, UserGender} = require("./Enums");
 /**
  * @typedef AnimeFilters
  * @type {object}
@@ -29,13 +28,13 @@ var AnimeFilters = {
  * @type {object}
  * @property {number} [anime_id]
  * @property {number} [number]
- * @property {string} [source]
+ * @property {boolean} [isDub]
  * @property {string} [locale]
  */
 var EpisodeFilters = {
     anime_id: null,
     number: null,
-    source: null, 
+    isDub: null, 
     locale: null
 }
 /**

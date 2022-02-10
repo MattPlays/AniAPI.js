@@ -52,13 +52,14 @@ class API {
         /**
          * Retrieves a random Anime show list.
          * @param {number} [count]
+         * @param {boolean} [nsfw]
          * @returns {Promise<{status_code: number, message: string, data: Anime[], version: string} | ErrorResponse>}
          */
-        Random: async(count) => {
+        Random: async(count, nsfw) => {
             if(!count) count = 1;
             return this.api({
                 method: "GET",
-                url: `/random/anime/${count}`
+                url: `/random/anime/${count}/${nsfw}`
             }).then(({data}) => {
                 return (data.status_code == 200) ? data : new ErrorResponse(data);
             }).catch((err) => {throw pe.render(err)});

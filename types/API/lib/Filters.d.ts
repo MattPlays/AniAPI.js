@@ -15,6 +15,7 @@ export type EpisodeFilters = {
     number?: number,
     source?: string,
     locale?: string,
+    is_dub?: boolean,
 }
 export type SongFilters = {
     anime_id?: number,

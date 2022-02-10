@@ -6,4 +6,7 @@ export interface Episode {
     video: string,
     source: string,
     locale: string,
+    quality: number,
+    format: string,
+    is_dub: boolean,
 }

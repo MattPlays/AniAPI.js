@@ -38,7 +38,7 @@ class EpisodeResponse extends Response {
             this.data = {
                 current_page: response.data.current_page,
                 count: response.data.count,
-                documents: response.data.documents.map((d) => {return new Episode(d.id, d.anime_id, d.number, d.title, d.video, d.locale)}),
+                documents: response.data.documents.map((d) => {return new Episode(d.id, d.anime_id, d.number, d.title, d.video, d.locale, d.quality, d.format, d.is_dub)}),
                 last_page: response.data.last_page
             };
         } else {
