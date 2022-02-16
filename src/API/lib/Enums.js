@@ -13,6 +13,18 @@
 /**
  * @readonly
  */
+var AnimeWeeklyAiringDay = {
+    "Sunday": 0,
+    "Monday": 1,
+    "Tuesday": 2,
+    "Wednesday": 3,
+    "Thursday": 4,
+    "Friday": 5,
+    "Saturday": 6
+}
+/**
+ * @readonly
+ */
 var AnimeStatus = {
     "FINISHED": 0,
     "RELEASING": 1,
@@ -80,5 +92,6 @@ module.exports = {
     AnimeResourceType: AnimeResourceType,
     UserRole: UserRole,
     UserGender: UserGender,
-    UserStoryStatus: UserStoryStatus
+    UserStoryStatus: UserStoryStatus,
+    AnimeWeeklyAiringDay: AnimeWeeklyAiringDay
 }

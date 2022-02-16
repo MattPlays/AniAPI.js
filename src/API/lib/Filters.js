@@ -11,6 +11,7 @@ const {AnimeFormat, AnimeStatus, AnimeSeasonPeriod, AnimeSongType, UserStoryStat
  * @property {number} [season]
  * @property {string[]} [genres]
  * @property {boolean} [nsfw]
+ * @property {boolean} [with_episodes]
  */
 var AnimeFilters = {
     title: null,
@@ -21,7 +22,8 @@ var AnimeFilters = {
     year: null,
     season: null,
     genres: null,
-    nsfw: null
+    nsfw: null,
+    with_episodes: null
 }
 /**
  * @typedef EpisodeFilters
