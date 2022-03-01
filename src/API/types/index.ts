@@ -19,7 +19,9 @@ export type APIResponseTypes =
     | Page<Anime>
     | Song[];
 
-export type Page<T> = T[] | { current_page: number; count: number; documents: T[] };
+export type Page<T> =
+    | T[]
+    | { last_page?: number; current_page: number; count: number; documents: T[] };
 
 export interface APIResponse<T extends APIResponseTypes> {
     status_code: number;

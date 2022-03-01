@@ -6,6 +6,7 @@ import { Anime } from './Anime';
 import { Episode } from './Episode';
 export declare type APIResponseTypes = Anime[] | Page<Anime> | Anime | Episode | Page<Episode> | Episode[] | Song | Page<Anime> | Song[];
 export declare type Page<T> = T[] | {
+    last_page?: number;
     current_page: number;
     count: number;
     documents: T[];
