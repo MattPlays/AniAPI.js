@@ -3,6 +3,12 @@ const pe = require("../../config");
 const {AnimeResponse, EpisodeResponse, UserResponse, SongResponse, ResourceResponse, ErrorResponse, UserChangedResponse, UserStoryResponse} = require("./Responses/index");
 const {AnimeFilters, EpisodeFilters, SongFilters, UserFilters, UserChanges, UserStoryFilters, UserStoryChanges} = require("./lib/Filters");
 const Enums = require("./lib/Enums");
+const Anime = require("./lib/Anime");
+const Episode = require("./lib/Episode");
+const Song = require("./lib/Song");
+const Resource = require("./lib/Resource");
+const User = require("./lib/User");
+const UserStory = require("./lib/UserStory");
 class API {
     /**
      * @param {string} jwt - To get your JWT login to ANIAPI [here](https://aniapi.com/login)
@@ -333,5 +339,11 @@ class API {
 }
 module.exports = {
     API,
-    ENUMS: Enums
+    ENUMS: Enums,
+    Anime,
+    Episode,
+    Song,
+    Resource,
+    User,
+    UserStory
 }

@@ -1,6 +1,12 @@
 import {AnimeFilters, EpisodeFilters, UserFilters, SongFilters, UserChanges, UserStoryChanges, UserStoryFilters} from './lib/Filters';
 import { AnimeResponse, EpisodeResponse, UserChangedResponse, UserResponse, SongResponse, ResourceResponse, ErrorResponse, UserStoryResponse } from './Responses/index';
 import ENUMS from "./lib/Enums";
+import { Anime } from './lib/Anime';
+import { Episode } from './lib/Episode';
+import { Resource } from './lib/Resource';
+import { Song } from './lib/Song';
+import { User } from './lib/User';
+import { UserStory } from './lib/UserStory';
 export declare class API {
     constructor(jwt: string);
     declare Anime: {
@@ -35,4 +41,4 @@ export declare class API {
         Delete(_id: string): Promise<{"statuscode": number, "message": string, "data": string, "version": string}>,
     };
 }
-export {ENUMS};
+export {ENUMS, Anime, Episode, Song, Resource, User, UserStory};
