@@ -78,3 +78,4 @@ typings/
 .gitattributes
 
 old-*
+test.js
