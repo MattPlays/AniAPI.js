@@ -1,0 +1,38 @@
+name: Build Typescript
+
+on:
+    push:
+        branches: [main, \@next]
+    pull_request:
+        branches: [main, \@next]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        strategy:
+            matrix:
+                node-version: [17.x]
+
+        steps:
+            - uses: actions/checkout@v2
+
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v1
+              with:
+                  node-version: ${{ matrix.node-version }}
+
+            - name: Build Typescript
+              run: |
+                  npm install
+                  npm run build
+            - name: setup git config
+              run: |
+                  git config user.name "GitHub Actions Bot"
+                  git config user.email "<>"
+            - name: commit
+              run: |
+                  git pull
+                  git add .
+                  git commit -m "Build Typescript"
+                  git push

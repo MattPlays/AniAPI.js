@@ -1,26 +1,33 @@
 {
-  "name": "@mattplays/aniapi",
-  "version": "1.1.8",
-  "description": "A Javascript wrapper for aniapi",
-  "main": "src/index.js",
-  "types": "types/index.d.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MattPlays/AniAPI.js.git"
-  },
-  "keywords": [
-    "API",
-    "aniapi",
-    "anime"
-  ],
-  "author": "MattPlays (https://github.com/MattPlays/)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/MattPlays/AniAPI.js/issues"
-  },
-  "homepage": "https://github.com/MattPlays/AniAPI.js#readme",
-  "dependencies": {
-    "axios": "^0.21.4",
-    "pretty-error": "^4.0.0"
-  }
+    "name": "@mattplays/aniapi",
+    "version": "1.1.8",
+    "description": "A Javascript wrapper for aniapi",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/MattPlays/AniAPI.js.git"
+    },
+    "keywords": [
+        "API",
+        "aniapi",
+        "anime"
+    ],
+    "author": "MattPlays (https://github.com/MattPlays/)",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/MattPlays/AniAPI.js/issues"
+    },
+    "scripts": {
+        "prepublish": "npm run build",
+        "build": "npx tsc -p ."
+    },
+    "homepage": "https://github.com/MattPlays/AniAPI.js#readme",
+    "dependencies": {
+        "pretty-error": "^4.0.0",
+        "undici": "^4.14.1"
+    },
+    "devDependencies": {
+        "typescript": "^4.6.2"
+    }
 }

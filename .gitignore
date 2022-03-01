@@ -76,3 +76,6 @@ typings/
 .fusebox/
 
 .gitattributes
+
+old-*
+test.js
