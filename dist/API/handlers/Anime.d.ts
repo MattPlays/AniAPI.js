@@ -1,11 +1,5 @@
-import {
-    Anime as AnimeType,
-    AnimeFormat,
-    AnimeStatus,
-    AnimeSeasonPeriod,
-    AnimeWeeklyAiringDay,
-} from '../types';
-export class Anime implements AnimeType {
+import { Anime as AnimeType, AnimeFormat, AnimeStatus, AnimeSeasonPeriod } from '../types';
+export declare class Anime implements AnimeType {
     /**
      * Unique identifier for an Anime.
      */
@@ -90,13 +84,5 @@ export class Anime implements AnimeType {
      * The show's global appreciation indicator. Minimum value is `0` and maximum is `100`.
      */
     score: number;
-    constructor(data: AnimeType) {
-        Object.assign(this, {
-            ...data,
-            end_date: new Date(data.end_date),
-            start_date: new Date(data.start_date),
-            titles: new Map(Object.entries(data.titles as any)),
-            descriptions: new Map(Object.entries(data.descriptions as any)),
-        });
-    }
+    constructor(data: AnimeType);
 }
