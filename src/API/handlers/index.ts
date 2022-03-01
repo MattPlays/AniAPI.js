@@ -2,7 +2,7 @@ import { Episode } from './Episode';
 import { Anime } from './Anime';
 
 import { AnimeFilters, EpisodeFilters } from './Filters';
-import { APIResponse, Documentify as Page } from '../types';
+import { APIResponse, Page } from '../types';
 
 import { request } from '../../util';
 
@@ -11,7 +11,10 @@ export class API {
 
     Anime = {
         GetByID: (id: string | number): Promise<APIResponse<Anime>> => {
-            return request({ url: `/anime/${id}`, headers: { Authorization: this.jwt } })
+            return request({
+                url: `/anime/${id}`,
+                headers: { Authorization: `Bearer ${this.jwt}` },
+            })
                 .then(res => res.json() as Promise<APIResponse<Anime>>)
                 .then(res => ({
                     ...res,
@@ -26,10 +29,10 @@ export class API {
             return request({
                 url: `/anime`,
                 query: { ...filters, page, per_page },
-                headers: { Authorization: this.jwt },
+                headers: { Authorization: `Bearer ${this.jwt}` },
             })
                 .then(res => res.json() as Promise<APIResponse<Page<Anime>>>)
-                .then(async res => {
+                .then(res => {
                     if (Array.isArray(res.data)) {
                         return {
                             ...res,
@@ -50,8 +53,8 @@ export class API {
         },
         Random: (count = 1, nsfw = false): Promise<APIResponse<Anime[]>> => {
             return request({
-                url: `/random/${count}/${nsfw}`,
-                headers: { Authorization: this.jwt },
+                url: `/random/anime/${count}/${nsfw || ''}`,
+                headers: { Authorization: `Bearer ${this.jwt}` },
             })
                 .then(res => res.json() as Promise<APIResponse<Anime[]>>)
                 .then(res => ({ ...res, data: res.data.map(anime => new Anime(anime)) }));
@@ -61,7 +64,7 @@ export class API {
         GetByID: (id: string | number): Promise<APIResponse<Episode>> => {
             return request({
                 url: `/episode/${id}`,
-                headers: { Authorization: this.jwt },
+                headers: { Authorization: `Bearer ${this.jwt}` },
             })
                 .then(res => res.json() as Promise<APIResponse<Episode>>)
                 .then(res => ({
@@ -77,10 +80,10 @@ export class API {
             return request({
                 url: `/anime`,
                 query: { ...filters, page, per_page },
-                headers: { Authorization: this.jwt },
+                headers: { Authorization: `Bearer ${this.jwt}` },
             })
                 .then(res => res.json() as Promise<APIResponse<Page<Episode>>>)
-                .then(async res => {
+                .then(res => {
                     if (Array.isArray(res.data)) {
                         return {
                             ...res,

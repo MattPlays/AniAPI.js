@@ -1,4 +1,4 @@
-import fetch, { Response } from 'node-fetch';
+import { fetch, Response } from 'undici';
 import { API_URL, API_VERSION } from './constants';
 
 export function request(data: {
@@ -13,7 +13,7 @@ export function request(data: {
         queryString = '?' + objectToQuery(data.query);
     }
     const { url, ...req } = data;
-    return fetch(`${API_URL}/${API_VERSION}${url}${queryString}`, req);
+    return fetch(`${API_URL}/v${API_VERSION}${url}${queryString}`, req);
 }
 
 export function objectToQuery(object: any): string {

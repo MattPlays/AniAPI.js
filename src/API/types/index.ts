@@ -8,18 +8,18 @@ import { Episode } from './Episode';
 export type APIResponseTypes =
     // Anime
     | Anime[]
-    | Documentify<Anime>
+    | Page<Anime>
     | Anime
     // Episode
     | Episode
-    | Documentify<Episode>
+    | Page<Episode>
     | Episode[]
     // Song
     | Song
-    | Documentify<Anime>
+    | Page<Anime>
     | Song[];
 
-export type Documentify<T> = T[] | { current_page: number; count: number; documents: T[] };
+export type Page<T> = T[] | { current_page: number; count: number; documents: T[] };
 
 export interface APIResponse<T extends APIResponseTypes> {
     status_code: number;

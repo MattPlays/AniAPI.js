@@ -1,4 +1,4 @@
-import { Response } from 'node-fetch';
+import { Response } from 'undici';
 export declare function request(data: {
     method?: 'GET' | 'PUT' | 'POST' | 'PATCH' | 'DELETE';
     url: string;
