@@ -7,17 +7,14 @@ import { Episode } from './Episode';
 
 export type APIResponseTypes =
     // Anime
-    | Anime[]
-    | Page<Anime>
     | Anime
+    | Page<Anime>
     // Episode
     | Episode
     | Page<Episode>
-    | Episode[]
     // Song
     | Song
-    | Page<Anime>
-    | Song[];
+    | Page<Anime>;
 
 export type Page<T> =
     | T[]
