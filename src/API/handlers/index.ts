@@ -1,7 +1,8 @@
 import { Episode } from './Episode';
 import { Anime } from './Anime';
+import { Song } from './Song';
 
-import { AnimeFilters, EpisodeFilters } from './Filters';
+import { AnimeFilters, EpisodeFilters, SongFilters } from './Filters';
 import { APIResponse, Page } from '../types';
 
 import { request } from '../../util';
@@ -101,6 +102,55 @@ export class API {
                         };
                     }
                 });
+        },
+    };
+    Song = {
+        GetByID: (id: string | number): Promise<APIResponse<Song>> => {
+            return request({
+                url: `/song/${id}`,
+                headers: { Authorization: `Bearer ${this.jwt}` },
+            })
+                .then(res => res.json() as Promise<APIResponse<Song>>)
+                .then(res => ({
+                    ...res,
+                    data: new Song(res.data),
+                }));
+        },
+        Get: (
+            filters: SongFilters,
+            page = 1,
+            per_page = 100
+        ): Promise<APIResponse<Page<Song>>> => {
+            return request({
+                url: `/song`,
+                query: { ...filters, page, per_page },
+                headers: { Authorization: `Bearer ${this.jwt}` },
+            })
+                .then(res => res.json() as Promise<APIResponse<Page<Song>>>)
+                .then(res => {
+                    if (Array.isArray(res.data)) {
+                        return {
+                            ...res,
+                            data: res.data.map(song => new Song(song)),
+                        };
+                    } else {
+                        return {
+                            ...res,
+                            data: {
+                                ...res.data,
+                                documents: res.data.documents.map(song => new Song(song)),
+                            },
+                        };
+                    }
+                });
+        },
+        Random: (count = 1): Promise<APIResponse<Song[]>> => {
+            return request({
+                url: `/random/song/${count}`,
+                headers: { Authorization: `Bearer ${this.jwt}` },
+            })
+                .then(res => res.json() as Promise<APIResponse<Song[]>>)
+                .then(res => ({ ...res, data: res.data.map(song => new Song(song)) }));
         },
     };
 }

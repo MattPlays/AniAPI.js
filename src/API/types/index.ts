@@ -14,7 +14,7 @@ export type APIResponseTypes =
     | Page<Episode>
     // Song
     | Song
-    | Page<Anime>;
+    | Page<Song>;
 
 export type Page<T> =
     | T[]
