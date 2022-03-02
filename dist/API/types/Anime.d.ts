@@ -1,13 +1,18 @@
+import { AnimeGenres } from '../handlers/Anime';
 export interface Anime {
     id: number;
     anilist_id: number;
     mal_id: number | null;
     format: AnimeFormat;
     status: AnimeStatus;
-    titles: Map<string, string>;
-    descriptions: Map<string, string>;
-    start_date: Date | null;
-    end_date: Date | null;
+    titles: {
+        [key: string]: string;
+    };
+    descriptions: {
+        [key: string]: string;
+    };
+    start_date: string | null;
+    end_date: string | null;
     season_period: AnimeSeasonPeriod;
     season_year: number | null;
     episodes_count: number;
@@ -16,7 +21,7 @@ export interface Anime {
     cover_image: string;
     cover_color: string;
     banner_image: string;
-    genres: string[];
+    genres: AnimeGenres[];
     sequel: number | null;
     prequel: number | null;
     score: number;

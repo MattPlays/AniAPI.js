@@ -1,6 +1,8 @@
 export * from './Anime';
 export * from './Episode';
 export * from './Song';
+export * from './User';
+import { User } from './User';
 import { Song } from './Song';
 import { Anime } from './Anime';
 import { Episode } from './Episode';
@@ -14,7 +16,10 @@ export type APIResponseTypes =
     | Page<Episode>
     // Song
     | Song
-    | Page<Song>;
+    | Page<Song>
+    // User
+    | User
+    | Page<User>;
 
 export type Page<T> =
     | T[]

@@ -1,6 +1,7 @@
 import { Episode } from './Episode';
 import { Anime } from './Anime';
-import { AnimeFilters, EpisodeFilters } from './Filters';
+import { Song } from './Song';
+import { AnimeFilters, EpisodeFilters, SongFilters } from './Filters';
 import { APIResponse, Page } from '../types';
 export declare class API {
     private jwt;
@@ -13,5 +14,10 @@ export declare class API {
     Episode: {
         GetByID: (id: string | number) => Promise<APIResponse<Episode>>;
         Get: (filters: EpisodeFilters, page?: number, per_page?: number) => Promise<APIResponse<Page<Episode>>>;
+    };
+    Song: {
+        GetByID: (id: string | number) => Promise<APIResponse<Song>>;
+        Get: (filters: SongFilters, page?: number, per_page?: number) => Promise<APIResponse<Page<Song>>>;
+        Random: (count?: number) => Promise<APIResponse<Song[]>>;
     };
 }

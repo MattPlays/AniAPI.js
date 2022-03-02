@@ -4,7 +4,7 @@ export * from './Song';
 import { Song } from './Song';
 import { Anime } from './Anime';
 import { Episode } from './Episode';
-export declare type APIResponseTypes = Anime[] | Page<Anime> | Anime | Episode | Page<Episode> | Episode[] | Song | Page<Anime> | Song[];
+export declare type APIResponseTypes = Anime | Page<Anime> | Episode | Page<Episode> | Song | Page<Song>;
 export declare type Page<T> = T[] | {
     last_page?: number;
     current_page: number;

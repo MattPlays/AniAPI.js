@@ -1,4 +1,5 @@
 import { AnimeFormat, AnimeStatus, AnimeSongType, AnimeSeasonPeriod } from '../types';
+import { AnimeGenres } from './Anime';
 export declare type AnimeFilters = {
     title?: string;
     anilist_id?: number;
@@ -7,7 +8,7 @@ export declare type AnimeFilters = {
     status?: AnimeStatus[];
     year?: number;
     season?: number;
-    genres?: string[];
+    genres?: AnimeGenres[];
     nsfw?: boolean;
 };
 export declare type EpisodeFilters = {
