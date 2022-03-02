@@ -299,19 +299,19 @@ export class Anime implements AnimeType {
     /**
      * A dictionary of the show's titles organized by localization.
      */
-    titles: Map<string, string>;
+    titles: { [key: string]: string };
     /**
      * A dictionary of the show's descriptions organized by localization.
      */
-    descriptions: Map<string, string>;
+    descriptions: { [key: string]: string };
     /**
-     * The show's global release date.
+     * A ISO timestamp string from the shows release date.
      */
-    start_date: Date;
+    start_date: string;
     /**
-     * The known show's global end date.
+     * A ISO timestamp string from the show's ending.
      */
-    end_date: Date;
+    end_date: string;
     /**
      * The season on which the show has been released.
      */
@@ -363,10 +363,6 @@ export class Anime implements AnimeType {
     constructor(data: AnimeType) {
         Object.assign(this, {
             ...data,
-            end_date: new Date(data.end_date),
-            start_date: new Date(data.start_date),
-            titles: new Map(Object.entries(data.titles as any)),
-            descriptions: new Map(Object.entries(data.descriptions as any)),
         });
     }
 }

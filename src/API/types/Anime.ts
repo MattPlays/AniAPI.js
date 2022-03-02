@@ -6,10 +6,10 @@ export interface Anime {
     mal_id: number | null;
     format: AnimeFormat;
     status: AnimeStatus;
-    titles: Map<string, string>;
-    descriptions: Map<string, string>;
-    start_date: Date | null;
-    end_date: Date | null;
+    titles: { [key: string]: string };
+    descriptions: { [key: string]: string };
+    start_date: string | null;
+    end_date: string | null;
     season_period: AnimeSeasonPeriod;
     season_year: number | null;
     episodes_count: number;
