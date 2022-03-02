@@ -79,7 +79,7 @@ export class API {
             per_page = 100
         ): Promise<APIResponse<Page<Episode>>> => {
             return request({
-                url: `/anime`,
+                url: `/episode`,
                 query: { ...filters, page, per_page },
                 headers: { Authorization: `Bearer ${this.jwt}` },
             })
@@ -88,7 +88,7 @@ export class API {
                     if (Array.isArray(res.data)) {
                         return {
                             ...res,
-                            data: res.data.map(anime => new Episode(anime)),
+                            data: res.data.map(episode => new Episode(episode)),
                         };
                     } else {
                         return {
@@ -96,7 +96,7 @@ export class API {
                             data: {
                                 ...res.data,
                                 documents: res.data.documents.map(
-                                    anime => new Episode(anime)
+                                    episode => new Episode(episode)
                                 ),
                             },
                         };
