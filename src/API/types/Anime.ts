@@ -1,3 +1,5 @@
+import { AnimeGenres } from '../handlers/Anime';
+
 export interface Anime {
     id: number;
     anilist_id: number;
@@ -16,7 +18,7 @@ export interface Anime {
     cover_image: string;
     cover_color: string;
     banner_image: string;
-    genres: string[];
+    genres: AnimeGenres[];
     sequel: number | null;
     prequel: number | null;
     score: number;

@@ -6,7 +6,7 @@ import {
     // UserGender,
     // UserStoryStatus,
 } from '../types';
-
+import { AnimeGenres } from './Anime';
 
 export type AnimeFilters = {
     title?: string;
@@ -16,7 +16,7 @@ export type AnimeFilters = {
     status?: AnimeStatus[];
     year?: number;
     season?: number;
-    genres?: string[];
+    genres?: AnimeGenres[];
     nsfw?: boolean;
 };
 export type EpisodeFilters = {
