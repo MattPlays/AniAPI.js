@@ -2,9 +2,9 @@ name: Build Typescript
 
 on:
     push:
-        branches: [main, \@next]
+        branches: [main]
     pull_request:
-        branches: [main, \@next]
+        branches: [main]
 
 jobs:
     build:
