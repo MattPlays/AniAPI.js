@@ -24,7 +24,6 @@
     },
     "homepage": "https://github.com/MattPlays/AniAPI.js#readme",
     "dependencies": {
-        "pretty-error": "^4.0.0",
         "undici": "^4.14.1"
     },
     "devDependencies": {
