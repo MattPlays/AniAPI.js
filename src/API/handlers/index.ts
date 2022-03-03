@@ -1,8 +1,9 @@
 import { Episode } from './Episode';
 import { Anime } from './Anime';
 import { Song } from './Song';
+import { User } from './User';
 
-import { AnimeFilters, EpisodeFilters, SongFilters } from './Filters';
+import { AnimeFilters, EpisodeFilters, SongFilters, UserFilters } from './Filters';
 import { APIResponse, Page } from '../types';
 
 import { request } from '../../util';
@@ -151,6 +152,47 @@ export class API {
             })
                 .then(res => res.json() as Promise<APIResponse<Song[]>>)
                 .then(res => ({ ...res, data: res.data.map(song => new Song(song)) }));
+        },
+    };
+    User = {
+        GetByID: (id: string | number): Promise<APIResponse<User>> => {
+            return request({
+                url: `/user/${id}`,
+                headers: { Authorization: `Bearer ${this.jwt}` },
+            })
+                .then(res => res.json() as Promise<APIResponse<User>>)
+                .then(res => ({
+                    ...res,
+                    data: new User(res.data),
+                }));
+        },
+        Get: (
+            filters: UserFilters,
+            page = 1,
+            per_page = 100
+        ): Promise<APIResponse<Page<User>>> => {
+            return request({
+                url: `/user`,
+                query: { ...filters, page, per_page },
+                headers: { Authorization: `Bearer ${this.jwt}` },
+            })
+                .then(res => res.json() as Promise<APIResponse<Page<User>>>)
+                .then(res => {
+                    if (Array.isArray(res.data)) {
+                        return {
+                            ...res,
+                            data: res.data.map(user => new User(user)),
+                        };
+                    } else {
+                        return {
+                            ...res,
+                            data: {
+                                ...res.data,
+                                documents: res.data.documents.map(user => new User(user)),
+                            },
+                        };
+                    }
+                });
         },
     };
 }
