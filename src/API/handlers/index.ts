@@ -17,6 +17,7 @@ import { APIResponse, Page } from '../types';
 import { pageMapper, request } from '../../util';
 import { DEFAULT_HEADERS } from '../../constants';
 import { UserStory } from './UserStory';
+import { Resource } from '../types/Resource';
 
 export class API {
     constructor(private jwt: string) {}
@@ -212,5 +213,23 @@ export class API {
                 headers: DEFAULT_HEADERS(this.jwt),
             }).then(res => res.json() as any as APIResponse<''>);
         },
+    };
+    Resource = {
+        GetGenres: (version = '1.0'): Promise<APIResponse<Resource>> => {
+            return request({
+                url: `/resources/${version}/0`,
+                headers: DEFAULT_HEADERS(this.jwt),
+            }).then(res => res.json() as any as APIResponse<Resource>);
+        },
+        GetLocalizations: (version = '1.0'): Promise<APIResponse<Resource>> => {
+            return request({
+                url: `/resources/${version}/1`,
+                headers: DEFAULT_HEADERS(this.jwt),
+            }).then(res => res.json() as any as APIResponse<Resource>);
+        },
+        /**
+         * @see https://aniapi.com/docs/oauth/implicit_grant
+         * @see https://aniapi.com/docs/oauth/authorization_code_grant
+         */ 
     };
 }

@@ -8,6 +8,7 @@ import { Song } from './Song';
 import { Anime } from './Anime';
 import { Episode } from './Episode';
 import { UserStory } from './UserStory';
+import { Resource } from './Resource';
 
 export type APIResponseTypes =
     // Anime
@@ -28,6 +29,8 @@ export type APIResponseTypes =
     | Page<User>
     | UserStory
     | UserStory[]
+    // Resource
+    | Resource
     // Null
     | null
     | '';

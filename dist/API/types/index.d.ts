@@ -8,7 +8,8 @@ import { Song } from './Song';
 import { Anime } from './Anime';
 import { Episode } from './Episode';
 import { UserStory } from './UserStory';
-export declare type APIResponseTypes = Anime | Anime[] | Page<Anime> | Episode | Episode[] | Page<Episode> | Song | Song[] | Page<Song> | User | User[] | Page<User> | UserStory | UserStory[] | null | '';
+import { Resource } from './Resource';
+export declare type APIResponseTypes = Anime | Anime[] | Page<Anime> | Episode | Episode[] | Page<Episode> | Song | Song[] | Page<Song> | User | User[] | Page<User> | UserStory | UserStory[] | Resource | null | '';
 export declare type Page<T> = {
     last_page?: number;
     current_page: number;

@@ -5,6 +5,7 @@ import { User } from './User';
 import { AnimeFilters, EpisodeFilters, SongFilters, UserChanges, UserFilters, UserStoryChanges, UserStoryFilters } from './Filters';
 import { APIResponse, Page } from '../types';
 import { UserStory } from './UserStory';
+import { Resource } from '../types/Resource';
 export declare class API {
     private jwt;
     constructor(jwt: string);
@@ -37,5 +38,9 @@ export declare class API {
             id: string | number;
         } & UserChanges) => Promise<APIResponse<UserStory>>;
         Delete: (id: string | number) => Promise<APIResponse<''>>;
+    };
+    Resource: {
+        GetGenres: (version?: string) => Promise<APIResponse<Resource>>;
+        GetLocalizations: (version?: string) => Promise<APIResponse<Resource>>;
     };
 }

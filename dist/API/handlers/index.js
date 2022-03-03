@@ -179,6 +179,24 @@ class API {
                 }).then(res => res.json());
             },
         };
+        this.Resource = {
+            GetGenres: (version = '1.0') => {
+                return (0, util_1.request)({
+                    url: `/resources/${version}/0`,
+                    headers: (0, constants_1.DEFAULT_HEADERS)(this.jwt),
+                }).then(res => res.json());
+            },
+            GetLocalizations: (version = '1.0') => {
+                return (0, util_1.request)({
+                    url: `/resources/${version}/1`,
+                    headers: (0, constants_1.DEFAULT_HEADERS)(this.jwt),
+                }).then(res => res.json());
+            },
+            /**
+             * @see https://aniapi.com/docs/oauth/implicit_grant
+             * @see https://aniapi.com/docs/oauth/authorization_code_grant
+             */
+        };
     }
 }
 exports.API = API;
