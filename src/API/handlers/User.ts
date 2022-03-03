@@ -3,7 +3,7 @@ import { UserRole, UserGender, User as UserType } from '../types';
 /**
  * @see https://aniapi.com/docs/resources/user
  */
-export default class User implements UserType {
+export class User implements UserType {
     /**
      * Unique identifier for an User.
      */
