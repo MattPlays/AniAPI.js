@@ -3,10 +3,10 @@ import {
     AnimeStatus,
     AnimeSongType,
     AnimeSeasonPeriod,
-    // UserGender,
-    // UserStoryStatus,
+    UserGender,
+    UserStoryStatus,
 } from '../types';
-
+import { AnimeGenres } from './Anime';
 
 export type AnimeFilters = {
     title?: string;
@@ -16,7 +16,7 @@ export type AnimeFilters = {
     status?: AnimeStatus[];
     year?: number;
     season?: number;
-    genres?: string[];
+    genres?: AnimeGenres[];
     nsfw?: boolean;
 };
 export type EpisodeFilters = {
@@ -38,7 +38,7 @@ export type UserFilters = {
     username?: string;
     email?: string;
 };
-/*
+
 export type UserChanges = {
     id: number;
     password: string;
@@ -47,6 +47,7 @@ export type UserChanges = {
     anilist_id: number;
     anilist_token: string;
 };
+
 export type UserStoryFilters = {
     anime_id: number;
     user_id: number;
@@ -60,4 +61,3 @@ export type UserStoryChanges = {
     current_episode: number;
     current_episode_ticks: number;
 };
-*/

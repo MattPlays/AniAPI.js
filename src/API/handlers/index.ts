@@ -1,20 +1,35 @@
 import { Episode } from './Episode';
 import { Anime } from './Anime';
+import { Song } from './Song';
+import { User } from './User';
 
-import { AnimeFilters, EpisodeFilters } from './Filters';
+import {
+    AnimeFilters,
+    EpisodeFilters,
+    SongFilters,
+    UserChanges,
+    UserFilters,
+    UserStoryChanges,
+    UserStoryFilters,
+} from './Filters';
 import { APIResponse, Page } from '../types';
 
-import { request } from '../../util';
+import { HTTPRequestValidator, pageMapper, request, validateToken } from '../../util';
+import { DEFAULT_HEADERS } from '../../constants';
+import { UserStory } from './UserStory';
+import { Resource } from '../types/Resource';
 
 export class API {
     constructor(private jwt: string) {}
 
+    validateToken = validateToken;
     Anime = {
         GetByID: (id: string | number): Promise<APIResponse<Anime>> => {
             return request({
                 url: `/anime/${id}`,
-                headers: { Authorization: `Bearer ${this.jwt}` },
+                headers: DEFAULT_HEADERS(this.jwt),
             })
+                .then(HTTPRequestValidator(this.jwt))
                 .then(res => res.json() as Promise<APIResponse<Anime>>)
                 .then(res => ({
                     ...res,
@@ -29,33 +44,18 @@ export class API {
             return request({
                 url: `/anime`,
                 query: { ...filters, page, per_page },
-                headers: { Authorization: `Bearer ${this.jwt}` },
+                headers: DEFAULT_HEADERS(this.jwt),
             })
+                .then(HTTPRequestValidator(this.jwt))
                 .then(res => res.json() as Promise<APIResponse<Page<Anime>>>)
-                .then(res => {
-                    if (Array.isArray(res.data)) {
-                        return {
-                            ...res,
-                            data: res.data.map(anime => new Anime(anime)),
-                        };
-                    } else {
-                        return {
-                            ...res,
-                            data: {
-                                ...res.data,
-                                documents: res.data.documents.map(
-                                    anime => new Anime(anime)
-                                ),
-                            },
-                        };
-                    }
-                });
+                .then(res => pageMapper(Anime, res));
         },
         Random: (count = 1, nsfw = false): Promise<APIResponse<Anime[]>> => {
             return request({
                 url: `/random/anime/${count}/${nsfw || ''}`,
-                headers: { Authorization: `Bearer ${this.jwt}` },
+                headers: DEFAULT_HEADERS(this.jwt),
             })
+                .then(HTTPRequestValidator(this.jwt))
                 .then(res => res.json() as Promise<APIResponse<Anime[]>>)
                 .then(res => ({ ...res, data: res.data.map(anime => new Anime(anime)) }));
         },
@@ -64,8 +64,9 @@ export class API {
         GetByID: (id: string | number): Promise<APIResponse<Episode>> => {
             return request({
                 url: `/episode/${id}`,
-                headers: { Authorization: `Bearer ${this.jwt}` },
+                headers: DEFAULT_HEADERS(this.jwt),
             })
+                .then(HTTPRequestValidator(this.jwt))
                 .then(res => res.json() as Promise<APIResponse<Episode>>)
                 .then(res => ({
                     ...res,
@@ -78,29 +79,176 @@ export class API {
             per_page = 100
         ): Promise<APIResponse<Page<Episode>>> => {
             return request({
-                url: `/anime`,
+                url: `/episode`,
                 query: { ...filters, page, per_page },
-                headers: { Authorization: `Bearer ${this.jwt}` },
+                headers: DEFAULT_HEADERS(this.jwt),
             })
+                .then(HTTPRequestValidator(this.jwt))
                 .then(res => res.json() as Promise<APIResponse<Page<Episode>>>)
-                .then(res => {
-                    if (Array.isArray(res.data)) {
-                        return {
-                            ...res,
-                            data: res.data.map(anime => new Episode(anime)),
-                        };
-                    } else {
-                        return {
-                            ...res,
-                            data: {
-                                ...res.data,
-                                documents: res.data.documents.map(
-                                    anime => new Episode(anime)
-                                ),
-                            },
-                        };
-                    }
-                });
+                .then(res => pageMapper(Episode, res));
+        },
+    };
+    Song = {
+        GetByID: (id: string | number): Promise<APIResponse<Song>> => {
+            return request({
+                url: `/song/${id}`,
+                headers: DEFAULT_HEADERS(this.jwt),
+            })
+                .then(HTTPRequestValidator(this.jwt))
+                .then(res => res.json() as Promise<APIResponse<Song>>)
+                .then(res => ({
+                    ...res,
+                    data: new Song(res.data),
+                }));
+        },
+        Get: (
+            filters: SongFilters,
+            page = 1,
+            per_page = 100
+        ): Promise<APIResponse<Page<Song>>> => {
+            return request({
+                url: `/song`,
+                query: { ...filters, page, per_page },
+                headers: DEFAULT_HEADERS(this.jwt),
+            })
+                .then(HTTPRequestValidator(this.jwt))
+                .then(res => res.json() as Promise<APIResponse<Page<Song>>>)
+                .then(res => pageMapper(Song, res));
+        },
+        Random: (count = 1): Promise<APIResponse<Song[]>> => {
+            return request({
+                url: `/random/song/${count}`,
+                headers: DEFAULT_HEADERS(this.jwt),
+            })
+                .then(HTTPRequestValidator(this.jwt))
+                .then(res => res.json() as Promise<APIResponse<Song[]>>)
+                .then(res => ({ ...res, data: res.data.map(song => new Song(song)) }));
+        },
+    };
+    User = {
+        GetByID: (id: string | number): Promise<APIResponse<User>> => {
+            return request({
+                url: `/user/${id}`,
+                headers: DEFAULT_HEADERS(this.jwt),
+            })
+                .then(HTTPRequestValidator(this.jwt))
+                .then(res => res.json() as Promise<APIResponse<User>>)
+                .then(res => ({
+                    ...res,
+                    data: new User(res.data),
+                }));
+        },
+        Get: (
+            filters: UserFilters,
+            page = 1,
+            per_page = 100
+        ): Promise<APIResponse<Page<User>>> => {
+            return request({
+                url: `/user`,
+                query: { ...filters, page, per_page },
+                headers: DEFAULT_HEADERS(this.jwt),
+            })
+                .then(HTTPRequestValidator(this.jwt))
+                .then(res => res.json() as Promise<APIResponse<Page<User>>>)
+                .then(res => pageMapper(User, res));
+        },
+        Delete: (id: string | number): Promise<APIResponse<''>> => {
+            return request({
+                method: 'DELETE',
+                url: `/user/${id}`,
+                headers: DEFAULT_HEADERS(this.jwt),
+            })
+                .then(HTTPRequestValidator(this.jwt))
+                .then(res => res.json() as any as APIResponse<''>);
+        },
+        Update: (
+            changes: { id: string | number } & UserChanges
+        ): Promise<APIResponse<User>> => {
+            return request({
+                method: 'POST',
+                url: '/user',
+                body: JSON.stringify({ ...changes, id: parseInt(changes.id.toString()) }),
+                headers: DEFAULT_HEADERS(this.jwt),
+            })
+                .then(HTTPRequestValidator(this.jwt))
+                .then(res => res.json() as Promise<APIResponse<User>>)
+                .then(res => ({
+                    ...res,
+                    data: new User(res.data),
+                }));
+        },
+    };
+    UserStory = {
+        Get: (
+            filters: UserStoryFilters,
+            page = 1,
+            per_page = 100
+        ): Promise<APIResponse<UserStory[]>> => {
+            return request({
+                url: `/user_story`,
+                query: { ...filters, page, per_page },
+                headers: DEFAULT_HEADERS(this.jwt),
+            })
+                .then(HTTPRequestValidator(this.jwt))
+                .then(res => res.json() as Promise<APIResponse<UserStory[]>>)
+                .then(res => pageMapper(UserStory, res));
+        },
+        Create: (changes: UserStoryChanges): Promise<APIResponse<UserStory>> => {
+            return request({
+                method: 'PUT',
+                url: '/user_story',
+                headers: DEFAULT_HEADERS(this.jwt),
+                body: JSON.stringify(changes),
+            })
+                .then(HTTPRequestValidator(this.jwt))
+                .then(res => res.json() as Promise<APIResponse<UserStory>>)
+                .then(res => ({
+                    ...res,
+                    data: new UserStory(res.data),
+                }));
+        },
+        Update: (
+            changes: { id: string | number } & UserChanges
+        ): Promise<APIResponse<UserStory>> => {
+            return request({
+                method: 'POST',
+                url: '/user_story',
+                body: JSON.stringify({ ...changes, id: parseInt(changes.id.toString()) }),
+                headers: DEFAULT_HEADERS(this.jwt),
+            })
+                .then(HTTPRequestValidator(this.jwt))
+                .then(res => res.json() as Promise<APIResponse<UserStory>>)
+                .then(res => ({
+                    ...res,
+                    data: new UserStory(res.data),
+                }));
+        },
+        Delete: (id: string | number): Promise<APIResponse<''>> => {
+            return request({
+                method: 'DELETE',
+                url: `/user_story/${id}`,
+                headers: DEFAULT_HEADERS(this.jwt),
+            })
+                .then(HTTPRequestValidator(this.jwt))
+                .then(res => res.json() as any as APIResponse<''>);
+        },
+    };
+    Resource = {
+        GetGenres: (version = '1.0'): Promise<APIResponse<Resource>> => {
+            return request({
+                url: `/resources/${version}/0`,
+                headers: DEFAULT_HEADERS(this.jwt),
+            })
+                .then(HTTPRequestValidator(this.jwt))
+                .then(res => res.json() as any as APIResponse<Resource>);
+        },
+        GetLocalizations: (version = '1.0'): Promise<APIResponse<Resource>> => {
+            return request({
+                url: `/resources/${version}/1`,
+                headers: DEFAULT_HEADERS(this.jwt),
+            })
+                .then(HTTPRequestValidator(this.jwt))
+                .then(res => res.json() as any as APIResponse<Resource>);
         },
     };
 }
