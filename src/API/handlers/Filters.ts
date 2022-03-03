@@ -3,7 +3,7 @@ import {
     AnimeStatus,
     AnimeSongType,
     AnimeSeasonPeriod,
-    // UserGender,
+    UserGender,
     // UserStoryStatus,
 } from '../types';
 import { AnimeGenres } from './Anime';
@@ -38,7 +38,7 @@ export type UserFilters = {
     username?: string;
     email?: string;
 };
-/*
+
 export type UserChanges = {
     id: number;
     password: string;
@@ -47,6 +47,7 @@ export type UserChanges = {
     anilist_id: number;
     anilist_token: string;
 };
+/*
 export type UserStoryFilters = {
     anime_id: number;
     user_id: number;

@@ -10,20 +10,30 @@ import { Episode } from './Episode';
 export type APIResponseTypes =
     // Anime
     | Anime
+    | Anime[]
     | Page<Anime>
     // Episode
     | Episode
+    | Episode[]
     | Page<Episode>
     // Song
     | Song
+    | Song[]
     | Page<Song>
     // User
     | User
-    | Page<User>;
+    | User[]
+    | Page<User>
+    // Null
+    | null
+    | '';
 
-export type Page<T> =
-    | T[]
-    | { last_page?: number; current_page: number; count: number; documents: T[] };
+export type Page<T> = {
+    last_page?: number;
+    current_page: number;
+    count: number;
+    documents: T[];
+};
 
 export interface APIResponse<T extends APIResponseTypes> {
     status_code: number;

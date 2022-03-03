@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.objectToQuery = exports.request = void 0;
+exports.pageMapper = exports.objectToQuery = exports.request = void 0;
 const undici_1 = require("undici");
 const constants_1 = require("./constants");
 function request(data) {
@@ -18,3 +18,21 @@ function objectToQuery(object) {
         .join('&');
 }
 exports.objectToQuery = objectToQuery;
+function pageMapper(_class, page) {
+    if (Array.isArray(page.data)) {
+        return {
+            ...page,
+            data: page.data.map(data => new _class(data)),
+        };
+    }
+    else {
+        return {
+            ...page,
+            data: {
+                ...page.data,
+                documents: page.data.documents.map((data) => new _class(data)),
+            },
+        };
+    }
+}
+exports.pageMapper = pageMapper;

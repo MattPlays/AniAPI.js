@@ -4,7 +4,9 @@ exports.API = void 0;
 const Episode_1 = require("./Episode");
 const Anime_1 = require("./Anime");
 const Song_1 = require("./Song");
+const User_1 = require("./User");
 const util_1 = require("../../util");
+const constants_1 = require("../../constants");
 class API {
     constructor(jwt) {
         this.jwt = jwt;
@@ -12,7 +14,7 @@ class API {
             GetByID: (id) => {
                 return (0, util_1.request)({
                     url: `/anime/${id}`,
-                    headers: { Authorization: `Bearer ${this.jwt}` },
+                    headers: (0, constants_1.DEFAULT_HEADERS)(this.jwt),
                 })
                     .then(res => res.json())
                     .then(res => ({
@@ -24,31 +26,15 @@ class API {
                 return (0, util_1.request)({
                     url: `/anime`,
                     query: { ...filters, page, per_page },
-                    headers: { Authorization: `Bearer ${this.jwt}` },
+                    headers: (0, constants_1.DEFAULT_HEADERS)(this.jwt),
                 })
                     .then(res => res.json())
-                    .then(res => {
-                    if (Array.isArray(res.data)) {
-                        return {
-                            ...res,
-                            data: res.data.map(anime => new Anime_1.Anime(anime)),
-                        };
-                    }
-                    else {
-                        return {
-                            ...res,
-                            data: {
-                                ...res.data,
-                                documents: res.data.documents.map(anime => new Anime_1.Anime(anime)),
-                            },
-                        };
-                    }
-                });
+                    .then(res => (0, util_1.pageMapper)(Anime_1.Anime, res));
             },
             Random: (count = 1, nsfw = false) => {
                 return (0, util_1.request)({
                     url: `/random/anime/${count}/${nsfw || ''}`,
-                    headers: { Authorization: `Bearer ${this.jwt}` },
+                    headers: (0, constants_1.DEFAULT_HEADERS)(this.jwt),
                 })
                     .then(res => res.json())
                     .then(res => ({ ...res, data: res.data.map(anime => new Anime_1.Anime(anime)) }));
@@ -58,7 +44,7 @@ class API {
             GetByID: (id) => {
                 return (0, util_1.request)({
                     url: `/episode/${id}`,
-                    headers: { Authorization: `Bearer ${this.jwt}` },
+                    headers: (0, constants_1.DEFAULT_HEADERS)(this.jwt),
                 })
                     .then(res => res.json())
                     .then(res => ({
@@ -70,33 +56,17 @@ class API {
                 return (0, util_1.request)({
                     url: `/episode`,
                     query: { ...filters, page, per_page },
-                    headers: { Authorization: `Bearer ${this.jwt}` },
+                    headers: (0, constants_1.DEFAULT_HEADERS)(this.jwt),
                 })
                     .then(res => res.json())
-                    .then(res => {
-                    if (Array.isArray(res.data)) {
-                        return {
-                            ...res,
-                            data: res.data.map(episode => new Episode_1.Episode(episode)),
-                        };
-                    }
-                    else {
-                        return {
-                            ...res,
-                            data: {
-                                ...res.data,
-                                documents: res.data.documents.map(episode => new Episode_1.Episode(episode)),
-                            },
-                        };
-                    }
-                });
+                    .then(res => (0, util_1.pageMapper)(Episode_1.Episode, res));
             },
         };
         this.Song = {
             GetByID: (id) => {
                 return (0, util_1.request)({
                     url: `/song/${id}`,
-                    headers: { Authorization: `Bearer ${this.jwt}` },
+                    headers: (0, constants_1.DEFAULT_HEADERS)(this.jwt),
                 })
                     .then(res => res.json())
                     .then(res => ({
@@ -108,34 +78,60 @@ class API {
                 return (0, util_1.request)({
                     url: `/song`,
                     query: { ...filters, page, per_page },
-                    headers: { Authorization: `Bearer ${this.jwt}` },
+                    headers: (0, constants_1.DEFAULT_HEADERS)(this.jwt),
                 })
                     .then(res => res.json())
-                    .then(res => {
-                    if (Array.isArray(res.data)) {
-                        return {
-                            ...res,
-                            data: res.data.map(song => new Song_1.Song(song)),
-                        };
-                    }
-                    else {
-                        return {
-                            ...res,
-                            data: {
-                                ...res.data,
-                                documents: res.data.documents.map(song => new Song_1.Song(song)),
-                            },
-                        };
-                    }
-                });
+                    .then(res => (0, util_1.pageMapper)(Song_1.Song, res));
             },
             Random: (count = 1) => {
                 return (0, util_1.request)({
                     url: `/random/song/${count}`,
-                    headers: { Authorization: `Bearer ${this.jwt}` },
+                    headers: (0, constants_1.DEFAULT_HEADERS)(this.jwt),
                 })
                     .then(res => res.json())
                     .then(res => ({ ...res, data: res.data.map(song => new Song_1.Song(song)) }));
+            },
+        };
+        this.User = {
+            GetByID: (id) => {
+                return (0, util_1.request)({
+                    url: `/user/${id}`,
+                    headers: (0, constants_1.DEFAULT_HEADERS)(this.jwt),
+                })
+                    .then(res => res.json())
+                    .then(res => ({
+                    ...res,
+                    data: new User_1.User(res.data),
+                }));
+            },
+            Get: (filters, page = 1, per_page = 100) => {
+                return (0, util_1.request)({
+                    url: `/user`,
+                    query: { ...filters, page, per_page },
+                    headers: (0, constants_1.DEFAULT_HEADERS)(this.jwt),
+                })
+                    .then(res => res.json())
+                    .then(res => (0, util_1.pageMapper)(User_1.User, res));
+            },
+            Delete: (id) => {
+                return (0, util_1.request)({
+                    method: 'DELETE',
+                    url: `/user/${id}`,
+                    headers: (0, constants_1.DEFAULT_HEADERS)(this.jwt),
+                }).then(res => res.json());
+            },
+            Update: (changes) => {
+                return (0, util_1.request)({
+                    method: 'POST',
+                    url: '/user',
+                    body: JSON.stringify(changes),
+                    headers: (0, constants_1.DEFAULT_HEADERS)(this.jwt),
+                })
+                    .then(res => res.json())
+                    .then(res => ({
+                    ...res,
+                    data: new User_1.User(res.data),
+                }));
             },
         };
     }

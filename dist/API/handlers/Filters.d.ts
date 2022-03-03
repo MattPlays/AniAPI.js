@@ -1,4 +1,4 @@
-import { AnimeFormat, AnimeStatus, AnimeSongType, AnimeSeasonPeriod } from '../types';
+import { AnimeFormat, AnimeStatus, AnimeSongType, AnimeSeasonPeriod, UserGender } from '../types';
 import { AnimeGenres } from './Anime';
 export declare type AnimeFilters = {
     title?: string;
@@ -29,4 +29,12 @@ export declare type SongFilters = {
 export declare type UserFilters = {
     username?: string;
     email?: string;
+};
+export declare type UserChanges = {
+    id: number;
+    password: string;
+    gender: UserGender;
+    localization: string;
+    anilist_id: number;
+    anilist_token: string;
 };
