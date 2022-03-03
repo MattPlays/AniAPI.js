@@ -4,11 +4,13 @@ import { Song } from './Song';
 import { User } from './User';
 import { AnimeFilters, EpisodeFilters, SongFilters, UserChanges, UserFilters, UserStoryChanges, UserStoryFilters } from './Filters';
 import { APIResponse, Page } from '../types';
+import { validateToken } from '../../util';
 import { UserStory } from './UserStory';
 import { Resource } from '../types/Resource';
 export declare class API {
     private jwt;
     constructor(jwt: string);
+    validateToken: typeof validateToken;
     Anime: {
         GetByID: (id: string | number) => Promise<APIResponse<Anime>>;
         Get: (filters: AnimeFilters, page?: number, per_page?: number) => Promise<APIResponse<Page<Anime>>>;

@@ -14,7 +14,7 @@ import {
 } from './Filters';
 import { APIResponse, Page } from '../types';
 
-import { pageMapper, request } from '../../util';
+import { HTTPRequestValidator, pageMapper, request, validateToken } from '../../util';
 import { DEFAULT_HEADERS } from '../../constants';
 import { UserStory } from './UserStory';
 import { Resource } from '../types/Resource';
@@ -22,12 +22,14 @@ import { Resource } from '../types/Resource';
 export class API {
     constructor(private jwt: string) {}
 
+    validateToken = validateToken;
     Anime = {
         GetByID: (id: string | number): Promise<APIResponse<Anime>> => {
             return request({
                 url: `/anime/${id}`,
                 headers: DEFAULT_HEADERS(this.jwt),
             })
+                .then(HTTPRequestValidator(this.jwt))
                 .then(res => res.json() as Promise<APIResponse<Anime>>)
                 .then(res => ({
                     ...res,
@@ -44,6 +46,7 @@ export class API {
                 query: { ...filters, page, per_page },
                 headers: DEFAULT_HEADERS(this.jwt),
             })
+                .then(HTTPRequestValidator(this.jwt))
                 .then(res => res.json() as Promise<APIResponse<Page<Anime>>>)
                 .then(res => pageMapper(Anime, res));
         },
@@ -52,6 +55,7 @@ export class API {
                 url: `/random/anime/${count}/${nsfw || ''}`,
                 headers: DEFAULT_HEADERS(this.jwt),
             })
+                .then(HTTPRequestValidator(this.jwt))
                 .then(res => res.json() as Promise<APIResponse<Anime[]>>)
                 .then(res => ({ ...res, data: res.data.map(anime => new Anime(anime)) }));
         },
@@ -62,6 +66,7 @@ export class API {
                 url: `/episode/${id}`,
                 headers: DEFAULT_HEADERS(this.jwt),
             })
+                .then(HTTPRequestValidator(this.jwt))
                 .then(res => res.json() as Promise<APIResponse<Episode>>)
                 .then(res => ({
                     ...res,
@@ -78,6 +83,7 @@ export class API {
                 query: { ...filters, page, per_page },
                 headers: DEFAULT_HEADERS(this.jwt),
             })
+                .then(HTTPRequestValidator(this.jwt))
                 .then(res => res.json() as Promise<APIResponse<Page<Episode>>>)
                 .then(res => pageMapper(Episode, res));
         },
@@ -88,6 +94,7 @@ export class API {
                 url: `/song/${id}`,
                 headers: DEFAULT_HEADERS(this.jwt),
             })
+                .then(HTTPRequestValidator(this.jwt))
                 .then(res => res.json() as Promise<APIResponse<Song>>)
                 .then(res => ({
                     ...res,
@@ -104,6 +111,7 @@ export class API {
                 query: { ...filters, page, per_page },
                 headers: DEFAULT_HEADERS(this.jwt),
             })
+                .then(HTTPRequestValidator(this.jwt))
                 .then(res => res.json() as Promise<APIResponse<Page<Song>>>)
                 .then(res => pageMapper(Song, res));
         },
@@ -112,6 +120,7 @@ export class API {
                 url: `/random/song/${count}`,
                 headers: DEFAULT_HEADERS(this.jwt),
             })
+                .then(HTTPRequestValidator(this.jwt))
                 .then(res => res.json() as Promise<APIResponse<Song[]>>)
                 .then(res => ({ ...res, data: res.data.map(song => new Song(song)) }));
         },
@@ -122,6 +131,7 @@ export class API {
                 url: `/user/${id}`,
                 headers: DEFAULT_HEADERS(this.jwt),
             })
+                .then(HTTPRequestValidator(this.jwt))
                 .then(res => res.json() as Promise<APIResponse<User>>)
                 .then(res => ({
                     ...res,
@@ -138,6 +148,7 @@ export class API {
                 query: { ...filters, page, per_page },
                 headers: DEFAULT_HEADERS(this.jwt),
             })
+                .then(HTTPRequestValidator(this.jwt))
                 .then(res => res.json() as Promise<APIResponse<Page<User>>>)
                 .then(res => pageMapper(User, res));
         },
@@ -146,7 +157,9 @@ export class API {
                 method: 'DELETE',
                 url: `/user/${id}`,
                 headers: DEFAULT_HEADERS(this.jwt),
-            }).then(res => res.json() as any as APIResponse<''>);
+            })
+                .then(HTTPRequestValidator(this.jwt))
+                .then(res => res.json() as any as APIResponse<''>);
         },
         Update: (
             changes: { id: string | number } & UserChanges
@@ -157,6 +170,7 @@ export class API {
                 body: JSON.stringify({ ...changes, id: parseInt(changes.id.toString()) }),
                 headers: DEFAULT_HEADERS(this.jwt),
             })
+                .then(HTTPRequestValidator(this.jwt))
                 .then(res => res.json() as Promise<APIResponse<User>>)
                 .then(res => ({
                     ...res,
@@ -175,6 +189,7 @@ export class API {
                 query: { ...filters, page, per_page },
                 headers: DEFAULT_HEADERS(this.jwt),
             })
+                .then(HTTPRequestValidator(this.jwt))
                 .then(res => res.json() as Promise<APIResponse<UserStory[]>>)
                 .then(res => pageMapper(UserStory, res));
         },
@@ -185,6 +200,7 @@ export class API {
                 headers: DEFAULT_HEADERS(this.jwt),
                 body: JSON.stringify(changes),
             })
+                .then(HTTPRequestValidator(this.jwt))
                 .then(res => res.json() as Promise<APIResponse<UserStory>>)
                 .then(res => ({
                     ...res,
@@ -200,6 +216,7 @@ export class API {
                 body: JSON.stringify({ ...changes, id: parseInt(changes.id.toString()) }),
                 headers: DEFAULT_HEADERS(this.jwt),
             })
+                .then(HTTPRequestValidator(this.jwt))
                 .then(res => res.json() as Promise<APIResponse<UserStory>>)
                 .then(res => ({
                     ...res,
@@ -211,7 +228,9 @@ export class API {
                 method: 'DELETE',
                 url: `/user_story/${id}`,
                 headers: DEFAULT_HEADERS(this.jwt),
-            }).then(res => res.json() as any as APIResponse<''>);
+            })
+                .then(HTTPRequestValidator(this.jwt))
+                .then(res => res.json() as any as APIResponse<''>);
         },
     };
     Resource = {
@@ -219,17 +238,17 @@ export class API {
             return request({
                 url: `/resources/${version}/0`,
                 headers: DEFAULT_HEADERS(this.jwt),
-            }).then(res => res.json() as any as APIResponse<Resource>);
+            })
+                .then(HTTPRequestValidator(this.jwt))
+                .then(res => res.json() as any as APIResponse<Resource>);
         },
         GetLocalizations: (version = '1.0'): Promise<APIResponse<Resource>> => {
             return request({
                 url: `/resources/${version}/1`,
                 headers: DEFAULT_HEADERS(this.jwt),
-            }).then(res => res.json() as any as APIResponse<Resource>);
+            })
+                .then(HTTPRequestValidator(this.jwt))
+                .then(res => res.json() as any as APIResponse<Resource>);
         },
-        /**
-         * @see https://aniapi.com/docs/oauth/implicit_grant
-         * @see https://aniapi.com/docs/oauth/authorization_code_grant
-         */ 
     };
 }

@@ -7,5 +7,7 @@ export declare function request(data: {
     headers?: any;
     query?: any;
 }): Promise<Response>;
+export declare function validateToken(jwt: string): Promise<boolean>;
+export declare function HTTPRequestValidator(jwt: string): (res: Response) => Promise<Response>;
 export declare function objectToQuery(object: any): string;
 export declare function pageMapper<T extends new (data: any) => any, K extends APIResponseTypes>(_class: T, page: APIResponse<K>): APIResponse<K>;

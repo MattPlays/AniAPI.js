@@ -1,5 +1,5 @@
 import { fetch, Response } from 'undici';
-import { API_URL, API_VERSION } from './constants';
+import { API_URL, API_VERSION, DEFAULT_HEADERS } from './constants';
 import { APIResponse, APIResponseTypes } from './API';
 
 export function request(data: {
@@ -15,6 +15,28 @@ export function request(data: {
     }
     const { url, ...req } = data;
     return fetch(`${API_URL}/v${API_VERSION}${url}${queryString}`, req);
+}
+
+export async function validateToken(jwt: string): Promise<boolean> {
+    const res = await request({
+        url: `/auth/me`,
+        headers: DEFAULT_HEADERS(jwt),
+    });
+    return res.status === 200;
+}
+
+export function HTTPRequestValidator(jwt: string) {
+    return async (res: Response) => {
+        if (!res.ok && res.status === 401) {
+            if (!(await validateToken(jwt))) {
+                throw new Error('Your JWT is no longer valid');
+            }
+            throw new Error(
+                `Failed with response code ${res.status}\n Body: ${await res.text()}`
+            );
+        }
+        return res;
+    };
 }
 
 export function objectToQuery(object: any): string {
