@@ -9,11 +9,14 @@ import {
     SongFilters,
     UserChanges,
     UserFilters,
+    UserStoryChanges,
+    UserStoryFilters,
 } from './Filters';
 import { APIResponse, Page } from '../types';
 
 import { pageMapper, request } from '../../util';
 import { DEFAULT_HEADERS } from '../../constants';
+import { UserStory } from './UserStory';
 
 export class API {
     constructor(private jwt: string) {}
@@ -150,7 +153,7 @@ export class API {
             return request({
                 method: 'POST',
                 url: '/user',
-                body: JSON.stringify(changes),
+                body: JSON.stringify({ ...changes, id: parseInt(changes.id.toString()) }),
                 headers: DEFAULT_HEADERS(this.jwt),
             })
                 .then(res => res.json() as Promise<APIResponse<User>>)
@@ -158,6 +161,56 @@ export class API {
                     ...res,
                     data: new User(res.data),
                 }));
+        },
+    };
+    UserStory = {
+        Get: (
+            filters: UserStoryFilters,
+            page = 1,
+            per_page = 100
+        ): Promise<APIResponse<UserStory[]>> => {
+            return request({
+                url: `/user_story`,
+                query: { ...filters, page, per_page },
+                headers: DEFAULT_HEADERS(this.jwt),
+            })
+                .then(res => res.json() as Promise<APIResponse<UserStory[]>>)
+                .then(res => pageMapper(UserStory, res));
+        },
+        Create: (changes: UserStoryChanges): Promise<APIResponse<UserStory>> => {
+            return request({
+                method: 'PUT',
+                url: '/user_story',
+                headers: DEFAULT_HEADERS(this.jwt),
+                body: JSON.stringify(changes),
+            })
+                .then(res => res.json() as Promise<APIResponse<UserStory>>)
+                .then(res => ({
+                    ...res,
+                    data: new UserStory(res.data),
+                }));
+        },
+        Update: (
+            changes: { id: string | number } & UserChanges
+        ): Promise<APIResponse<UserStory>> => {
+            return request({
+                method: 'POST',
+                url: '/user_story',
+                body: JSON.stringify({ ...changes, id: parseInt(changes.id.toString()) }),
+                headers: DEFAULT_HEADERS(this.jwt),
+            })
+                .then(res => res.json() as Promise<APIResponse<UserStory>>)
+                .then(res => ({
+                    ...res,
+                    data: new UserStory(res.data),
+                }));
+        },
+        Delete: (id: string | number): Promise<APIResponse<''>> => {
+            return request({
+                method: 'DELETE',
+                url: `/user_story/${id}`,
+                headers: DEFAULT_HEADERS(this.jwt),
+            }).then(res => res.json() as any as APIResponse<''>);
         },
     };
 }

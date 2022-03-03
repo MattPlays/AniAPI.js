@@ -1,4 +1,4 @@
-import { AnimeFormat, AnimeStatus, AnimeSongType, AnimeSeasonPeriod, UserGender } from '../types';
+import { AnimeFormat, AnimeStatus, AnimeSongType, AnimeSeasonPeriod, UserGender, UserStoryStatus } from '../types';
 import { AnimeGenres } from './Anime';
 export declare type AnimeFilters = {
     title?: string;
@@ -37,4 +37,17 @@ export declare type UserChanges = {
     localization: string;
     anilist_id: number;
     anilist_token: string;
+};
+export declare type UserStoryFilters = {
+    anime_id: number;
+    user_id: number;
+    status: UserStoryStatus;
+    synced: boolean;
+};
+export declare type UserStoryChanges = {
+    user_id: number;
+    anime_id: number;
+    status: UserStoryStatus;
+    current_episode: number;
+    current_episode_ticks: number;
 };

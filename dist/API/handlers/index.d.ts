@@ -2,8 +2,9 @@ import { Episode } from './Episode';
 import { Anime } from './Anime';
 import { Song } from './Song';
 import { User } from './User';
-import { AnimeFilters, EpisodeFilters, SongFilters, UserChanges, UserFilters } from './Filters';
+import { AnimeFilters, EpisodeFilters, SongFilters, UserChanges, UserFilters, UserStoryChanges, UserStoryFilters } from './Filters';
 import { APIResponse, Page } from '../types';
+import { UserStory } from './UserStory';
 export declare class API {
     private jwt;
     constructor(jwt: string);
@@ -28,5 +29,13 @@ export declare class API {
         Update: (changes: {
             id: string | number;
         } & UserChanges) => Promise<APIResponse<User>>;
+    };
+    UserStory: {
+        Get: (filters: UserStoryFilters, page?: number, per_page?: number) => Promise<APIResponse<UserStory[]>>;
+        Create: (changes: UserStoryChanges) => Promise<APIResponse<UserStory>>;
+        Update: (changes: {
+            id: string | number;
+        } & UserChanges) => Promise<APIResponse<UserStory>>;
+        Delete: (id: string | number) => Promise<APIResponse<''>>;
     };
 }

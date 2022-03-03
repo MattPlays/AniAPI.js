@@ -4,7 +4,7 @@ import {
     AnimeSongType,
     AnimeSeasonPeriod,
     UserGender,
-    // UserStoryStatus,
+    UserStoryStatus,
 } from '../types';
 import { AnimeGenres } from './Anime';
 
@@ -47,7 +47,7 @@ export type UserChanges = {
     anilist_id: number;
     anilist_token: string;
 };
-/*
+
 export type UserStoryFilters = {
     anime_id: number;
     user_id: number;
@@ -61,4 +61,3 @@ export type UserStoryChanges = {
     current_episode: number;
     current_episode_ticks: number;
 };
-*/

@@ -1,12 +1,14 @@
 export * from './Anime';
 export * from './Episode';
 export * from './Song';
+export * from './UserStory';
 export * from './User';
 import { User } from './User';
 import { Song } from './Song';
 import { Anime } from './Anime';
 import { Episode } from './Episode';
-export declare type APIResponseTypes = Anime | Anime[] | Page<Anime> | Episode | Episode[] | Page<Episode> | Song | Song[] | Page<Song> | User | User[] | Page<User> | null | '';
+import { UserStory } from './UserStory';
+export declare type APIResponseTypes = Anime | Anime[] | Page<Anime> | Episode | Episode[] | Page<Episode> | Song | Song[] | Page<Song> | User | User[] | Page<User> | UserStory | UserStory[] | null | '';
 export declare type Page<T> = {
     last_page?: number;
     current_page: number;

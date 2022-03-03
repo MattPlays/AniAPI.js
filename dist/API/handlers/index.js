@@ -7,6 +7,7 @@ const Song_1 = require("./Song");
 const User_1 = require("./User");
 const util_1 = require("../../util");
 const constants_1 = require("../../constants");
+const UserStory_1 = require("./UserStory");
 class API {
     constructor(jwt) {
         this.jwt = jwt;
@@ -124,7 +125,7 @@ class API {
                 return (0, util_1.request)({
                     method: 'POST',
                     url: '/user',
-                    body: JSON.stringify(changes),
+                    body: JSON.stringify({ ...changes, id: parseInt(changes.id.toString()) }),
                     headers: (0, constants_1.DEFAULT_HEADERS)(this.jwt),
                 })
                     .then(res => res.json())
@@ -132,6 +133,50 @@ class API {
                     ...res,
                     data: new User_1.User(res.data),
                 }));
+            },
+        };
+        this.UserStory = {
+            Get: (filters, page = 1, per_page = 100) => {
+                return (0, util_1.request)({
+                    url: `/user_story`,
+                    query: { ...filters, page, per_page },
+                    headers: (0, constants_1.DEFAULT_HEADERS)(this.jwt),
+                })
+                    .then(res => res.json())
+                    .then(res => (0, util_1.pageMapper)(UserStory_1.UserStory, res));
+            },
+            Create: (changes) => {
+                return (0, util_1.request)({
+                    method: 'PUT',
+                    url: '/user_story',
+                    headers: (0, constants_1.DEFAULT_HEADERS)(this.jwt),
+                    body: JSON.stringify(changes),
+                })
+                    .then(res => res.json())
+                    .then(res => ({
+                    ...res,
+                    data: new UserStory_1.UserStory(res.data),
+                }));
+            },
+            Update: (changes) => {
+                return (0, util_1.request)({
+                    method: 'POST',
+                    url: '/user_story',
+                    body: JSON.stringify({ ...changes, id: parseInt(changes.id.toString()) }),
+                    headers: (0, constants_1.DEFAULT_HEADERS)(this.jwt),
+                })
+                    .then(res => res.json())
+                    .then(res => ({
+                    ...res,
+                    data: new UserStory_1.UserStory(res.data),
+                }));
+            },
+            Delete: (id) => {
+                return (0, util_1.request)({
+                    method: 'DELETE',
+                    url: `/user_story/${id}`,
+                    headers: (0, constants_1.DEFAULT_HEADERS)(this.jwt),
+                }).then(res => res.json());
             },
         };
     }

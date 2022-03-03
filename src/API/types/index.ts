@@ -1,11 +1,13 @@
 export * from './Anime';
 export * from './Episode';
 export * from './Song';
+export * from './UserStory';
 export * from './User';
 import { User } from './User';
 import { Song } from './Song';
 import { Anime } from './Anime';
 import { Episode } from './Episode';
+import { UserStory } from './UserStory';
 
 export type APIResponseTypes =
     // Anime
@@ -24,6 +26,8 @@ export type APIResponseTypes =
     | User
     | User[]
     | Page<User>
+    | UserStory
+    | UserStory[]
     // Null
     | null
     | '';

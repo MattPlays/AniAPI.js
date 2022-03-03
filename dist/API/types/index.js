@@ -17,4 +17,5 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./Anime"), exports);
 __exportStar(require("./Episode"), exports);
 __exportStar(require("./Song"), exports);
+__exportStar(require("./UserStory"), exports);
 __exportStar(require("./User"), exports);
