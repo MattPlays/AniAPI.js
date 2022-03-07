@@ -9,14 +9,8 @@ Maintained by: @Artrix9095 @MattPlays
 npm i @mattplays/aniapi
 ```
 
-# Usage
-
-To get your JWT login to ANIAPI [here](https://aniapi.com/login)
-
-```javascript
-const ANIAPI = require('@mattplays/aniapi');
-const API = new ANIAPI.API('DUMMY_JWT');
-```
+# Documentation
+WIP
 
 # License
 
