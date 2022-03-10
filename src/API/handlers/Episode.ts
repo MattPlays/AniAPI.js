@@ -21,6 +21,10 @@ export class Episode implements EpisodeType {
      */
     video: string;
     /**
+     * The headers required to retrieve the video
+     */
+    video_headers: { [key: string]: string };
+    /**
      * The episode's website related locale.
      */
     locale: string;
@@ -40,4 +44,6 @@ export class Episode implements EpisodeType {
     constructor(data: EpisodeType) {
         Object.assign(this, data);
     }
+    
+
 }
