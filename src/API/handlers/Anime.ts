@@ -328,6 +328,8 @@ export class Anime implements AnimeType {
      * The show's episode average duration in minutes.
      */
     episode_duration: number;
+    episode_from: number;
+    episode_to: number;
     /**
      * External link to the show's trailer video. Possible services: Youtube, Dailymotion
      */
@@ -360,6 +362,15 @@ export class Anime implements AnimeType {
      * The show's global appreciation indicator. Minimum value is `0` and maximum is `100`.
      */
     score: number;
+    /**
+     * The sagas for said anime
+     */
+    sagas?: Anime[];
+    /**
+     * Wether the show has a cover image or not
+     */
+    has_cover_image: boolean;
+
     constructor(data: AnimeType) {
         Object.assign(this, {
             ...data,
