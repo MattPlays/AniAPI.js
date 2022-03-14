@@ -14,6 +14,8 @@ export interface Anime {
     season_year: number | null;
     episodes_count: number;
     episode_duration: number | null;
+    episode_from: number;
+    episode_to: number;
     trailer_url: string | null;
     cover_image: string;
     cover_color: string;
@@ -22,6 +24,8 @@ export interface Anime {
     sequel: number | null;
     prequel: number | null;
     score: number;
+    sagas?: Anime[];
+    has_cover_image: boolean;
 }
 
 export enum AnimeWeeklyAiringDay {
