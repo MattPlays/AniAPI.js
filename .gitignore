@@ -80,3 +80,4 @@ typings/
 old-*
 test.js
 dist
+docs/README.md

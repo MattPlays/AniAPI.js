@@ -1,6 +1,6 @@
 {
     "name": "@mattplays/aniapi",
-    "version": "2.0.6",
+    "version": "2.0.7",
     "description": "A Javascript wrapper for aniapi",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -19,14 +19,17 @@
         "url": "https://github.com/MattPlays/AniAPI.js/issues"
     },
     "scripts": {
-        "prepublish": "npm run build",
-        "build": "npx tsc -p ."
+        "prepublishOnly": "npm run build",
+        "build": "npx tsc -p .",
+        "docs": "npx typedoc --plugin typedoc-plugin-markdown --out docs src/index.ts"
     },
     "homepage": "https://github.com/MattPlays/AniAPI.js#readme",
     "dependencies": {
         "undici": "^4.14.1"
     },
     "devDependencies": {
+        "typedoc": "^0.22.13",
+        "typedoc-plugin-markdown": "^3.11.14",
         "typescript": "^4.6.2"
     }
 }

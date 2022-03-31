@@ -9,8 +9,11 @@ Maintained by: @Artrix9095 @MattPlays
 npm i @mattplays/aniapi
 ```
 
-# Documentation
-WIP
+Useful Links:
+
+-   [Docs](docs/modules.md)
+-   [AniAPI](https://aniapi.com/)
+-   [AniAPI Docs](https://aniapi.com/docs/)
 
 # License
 
