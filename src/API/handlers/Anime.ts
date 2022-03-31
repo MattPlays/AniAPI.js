@@ -3,7 +3,7 @@ import {
     AnimeFormat,
     AnimeStatus,
     AnimeSeasonPeriod,
-    AnimeWeeklyAiringDay,
+    Saga,
 } from '../types';
 
 export type AnimeGenres =
@@ -365,7 +365,7 @@ export class Anime implements AnimeType {
     /**
      * The sagas for said anime
      */
-    sagas?: Anime[];
+    sagas?: Saga[];
     /**
      * Wether the show has a cover image or not
      */
