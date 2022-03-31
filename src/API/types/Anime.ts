@@ -26,6 +26,7 @@ export interface Anime {
     score: number;
     sagas?: Anime[];
     has_cover_image: boolean;
+    recommendations: number[];
 }
 
 export enum AnimeWeeklyAiringDay {

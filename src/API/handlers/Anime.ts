@@ -370,6 +370,10 @@ export class Anime implements AnimeType {
      * Wether the show has a cover image or not
      */
     has_cover_image: boolean;
+    /**
+     * A array of IDs pointing to similar anime
+     */
+    recommendations: number[];
 
     constructor(data: AnimeType) {
         Object.assign(this, {
