@@ -19,7 +19,7 @@
         "url": "https://github.com/MattPlays/AniAPI.js/issues"
     },
     "scripts": {
-        "prepublish": "npm run build",
+        "prepublishOnly": "npm run build",
         "build": "npx tsc -p .",
         "docs": "npx typedoc --plugin typedoc-plugin-markdown --out docs src/index.ts"
     },
