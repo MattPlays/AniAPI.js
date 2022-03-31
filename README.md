@@ -10,9 +10,10 @@ npm i @mattplays/aniapi
 ```
 
 Useful Links:
-    - [Docs](docs/modules.md)
-    - [AniAPI](https://aniapi.com/)
-    - [AniAPI Docs](https://aniapi.com/docs/)
+
+-   [Docs](docs/modules.md)
+-   [AniAPI](https://aniapi.com/)
+-   [AniAPI Docs](https://aniapi.com/docs/)
 
 # License
 
