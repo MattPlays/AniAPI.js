@@ -24,10 +24,15 @@ export interface Anime {
     sequel: number | null;
     prequel: number | null;
     score: number;
-    sagas?: Anime[];
+    sagas?: Saga[];
     has_cover_image: boolean;
     recommendations: number[];
 }
+
+export type Saga = Pick<
+    Anime,
+    'episode_from' | 'episode_to' | 'episodes_count' | 'titles' | 'descriptions'
+>;
 
 export enum AnimeWeeklyAiringDay {
     'Sunday',
