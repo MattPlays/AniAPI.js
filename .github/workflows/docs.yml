@@ -22,7 +22,7 @@ jobs:
 
             - name: Build docs
               run: |
-                  npm install
+                  sudo npm install
                   sudo npm docs
             - name: setup git config
               run: |
