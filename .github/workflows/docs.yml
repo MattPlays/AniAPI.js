@@ -23,7 +23,7 @@ jobs:
             - name: Build docs
               run: |
                   npm install
-                  npm docs
+                  sudo npm docs
             - name: setup git config
               run: |
                   git config user.name "GitHub Actions Bot"
