@@ -1,5 +1,7 @@
 # AniAPI.js
 
+**THIS API IS NO LONGER RUNNING AND THIS WRAPPER WILL NO LONGER BE MAINTAINED**
+
 A Javascript wrapper for [aniapi](https://aniapi.com)
 Maintained by: @Artrix9095 @MattPlays
 
